@@ -1,5 +1,5 @@
-baseURL = 'https://tobaye.github.io/'
-title = 'Monkey Blog'
+baseURL = 'https://puke.eu.org/'
+title = '普客网'
 theme = 'PaperMod'
 defaultContentLanguage = 'zh-cn'
 
@@ -7,7 +7,7 @@ defaultContentLanguage = 'zh-cn'
   [languages.zh-cn]
     label = '中文'
     locale = 'zh-CN'
-    title = 'Monkey Blog'
+    title = '普客网'
     weight = 1
 
 enableRobotsTXT = true
@@ -19,7 +19,7 @@ summaryLength = 80
 
 [params]
   env = 'production'
-  description = '建在 MonkeyCode 免费云开发环境上的静态博客。建站，然后每天发帖，看这台机器能活多久。'
+  description = '普客网，Yet Bai 的个人小站。记录技术折腾与日常。'
   author = 'tobaye'
   defaultTheme = 'auto'
   DateFormat = '2006年1月2日'
@@ -34,11 +34,18 @@ summaryLength = 80
   disableThemeToggle = false
 
   [params.homeInfoParams]
-    Title = '开博了'
-    Content = '建在 MonkeyCode 免费云开发环境上的静态博客。建站，然后每天发帖，看这台机器能活多久。'
+    Title = '欢迎来到普客网'
+    Content = '这里是 Yet Bai 的个人小站，写写技术折腾、工具和日常。'
 
   [params.label]
-    text = 'Monkey Blog'
+    text = '普客网'
+    icon = '/images/logo.webp'
+    iconHeight = 32
+
+  [params.assets]
+    favicon = '/images/logo.webp'
+    favicon16x16 = '/images/logo.webp'
+    favicon32x32 = '/images/logo.webp'
 
 [menu]
   [[menu.main]]
