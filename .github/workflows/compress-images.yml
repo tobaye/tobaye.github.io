@@ -1,0 +1,25 @@
+name: Compress Images
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "static/images/uploads/**"
+permissions:
+  contents: write
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '自动压缩图片')"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Resize and compress uploaded images in place
+        run: |
+          find static/images/uploads -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) -print0 | while IFS= read -r -d '' f; do
+            mogrify -auto-orient -resize '2560x2560>' -strip -quality 82 "$f"
+          done
+      - name: Commit compressed images
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "自动压缩图片（≤2560px，q82）"
+          file_pattern: "static/images/uploads/**"
