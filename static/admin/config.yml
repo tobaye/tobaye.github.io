@@ -1,0 +1,39 @@
+backend:
+  name: github
+  repo: tobaye/tobaye.github.io
+  branch: main
+
+site_url: https://puke.eu.org
+display_url: https://puke.eu.org
+logo_url: /images/logo.webp
+
+media_folder: static/images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: posts
+    label: 文章
+    label_singular: 文章
+    folder: content/posts
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}}（{{date | date('YYYY-MM-DD')}}）"
+    sortable_fields:
+      fields: [date, title]
+      default:
+        field: date
+        direction: descending
+    fields:
+      - { label: 标题, name: title, widget: string }
+      - label: 日期
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+      - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
+      - { label: 标签, name: tags, widget: list, required: false }
+      - { label: 分类, name: categories, widget: list, required: false }
+      - { label: 摘要, name: description, widget: text, required: false }
+      - { label: 正文, name: body, widget: markdown }
