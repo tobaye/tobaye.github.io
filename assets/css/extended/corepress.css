@@ -142,3 +142,31 @@ input#searchInput {
   stroke-linejoin: round;
   opacity: 0.75;
 }
+
+/* 首页博主名片卡：居中、圆头像、渐变光环、统计胶囊 */
+.home-info { text-align: center; }
+.cp-avatar {
+  width: 76px; height: 76px; border-radius: 50%; object-fit: cover;
+  border: 3px solid transparent;
+  background: linear-gradient(var(--entry), var(--entry)) padding-box,
+              linear-gradient(135deg, var(--cp-blue), var(--cp-pink)) border-box;
+  margin: 0 auto 10px;
+}
+.cp-stats { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 14px 0 4px; }
+.cp-stats span {
+  background: rgba(61, 126, 255, 0.08);
+  border: 1px solid var(--border);
+  padding: 4px 12px; border-radius: 999px; font-size: 0.85em;
+}
+.home-info .entry-footer { display: flex; justify-content: center; }
+
+/* 文章封面左上角的分类角标 */
+.entry-cover { position: relative; }
+.cp-cat-badge {
+  position: absolute; top: 12px; left: 12px; z-index: 2;
+  background: linear-gradient(90deg, var(--cp-blue), var(--cp-violet));
+  color: #fff; padding: 3px 12px; border-radius: 999px;
+  font-size: 0.8em; font-weight: 600;
+  box-shadow: 0 4px 10px rgba(20, 30, 60, 0.25);
+}
+.cp-cat-badge:hover { color: #fff; opacity: 0.92; }
