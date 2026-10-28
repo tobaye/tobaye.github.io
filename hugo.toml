@@ -37,6 +37,13 @@ summaryLength = 80
   [params.footer]
     text = '普客网 · 记录技术折腾与日常'
 
+  [[params.socialIcons]]
+    name = 'github'
+    url = 'https://github.com/tobaye'
+  [[params.socialIcons]]
+    name = 'rss'
+    url = '/index.xml'
+
   [params.homeInfoParams]
     Title = '欢迎来到普客网'
     Content = '这里是 Yet Bai 的个人小站，写写技术折腾、工具和日常。'
