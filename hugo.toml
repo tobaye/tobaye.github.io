@@ -1,0 +1,59 @@
+baseURL = 'https://tobaye.github.io/'
+title = 'Monkey Blog'
+theme = 'PaperMod'
+defaultContentLanguage = 'zh-cn'
+
+[languages]
+  [languages.zh-cn]
+    label = '中文'
+    locale = 'zh-CN'
+    title = 'Monkey Blog'
+    weight = 1
+
+enableRobotsTXT = true
+enableEmoji = false
+summaryLength = 80
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  env = 'production'
+  description = '建在 MonkeyCode 免费云开发环境上的静态博客。建站，然后每天发帖，看这台机器能活多久。'
+  author = 'tobaye'
+  defaultTheme = 'auto'
+  DateFormat = '2006年1月2日'
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowRssButtonInSectionTermList = true
+  ShowPageNums = true
+  ShowToc = false
+  disableThemeToggle = false
+
+  [params.homeInfoParams]
+    Title = '开博了'
+    Content = '建在 MonkeyCode 免费云开发环境上的静态博客。建站，然后每天发帖，看这台机器能活多久。'
+
+  [params.label]
+    text = 'Monkey Blog'
+
+[menu]
+  [[menu.main]]
+    identifier = 'posts'
+    name = '文章'
+    url = '/posts/'
+    weight = 10
+  [[menu.main]]
+    identifier = 'archives'
+    name = '归档'
+    url = '/archives/'
+    weight = 20
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[outputs]
+  home = ['HTML', 'RSS']
