@@ -1,0 +1,6 @@
+<style>
+#reading-progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:9999;background:linear-gradient(90deg,#3d7eff,#9d5cff,#ff6a95);}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){var bar=document.createElement('div');bar.id='reading-progress';document.body.appendChild(bar);function upd(){var h=document.documentElement;var max=h.scrollHeight-h.clientHeight;var y=h.scrollTop||document.body.scrollTop;bar.style.width=(max>0?(y/max*100):0)+'%';}document.addEventListener('scroll',upd,{passive:true});upd();});
+</script>
