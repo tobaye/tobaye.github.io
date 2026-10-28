@@ -1,0 +1,20 @@
+{{- with site.Params.homeInfoParams }}
+<article class="first-entry home-info">
+    <img class="cp-avatar" src="/images/logo.webp" alt="普客网">
+    <header class="entry-header">
+        <h1>{{ .Title | markdownify }}</h1>
+    </header>
+    <div class="entry-content md-content">
+        {{ $opts := dict "display" "block" }}
+        {{ .Content | $.Page.RenderString $opts }}
+    </div>
+    <div class="cp-stats">
+        <span>📝 文章 {{ len (where site.RegularPages "Section" "posts") }} 篇</span>
+        <span>🗂️ 分类 {{ len site.Taxonomies.categories }} 个</span>
+        <span>🏷️ 标签 {{ len site.Taxonomies.tags }} 个</span>
+    </div>
+    <footer class="entry-footer">
+        {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
+    </footer>
+</article>
+{{- end -}}
