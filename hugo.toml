@@ -2,6 +2,7 @@ baseURL = 'https://puke.eu.org/'
 title = '普客网'
 theme = 'PaperMod'
 defaultContentLanguage = 'zh-cn'
+timeZone = 'Asia/Shanghai'
 
 [languages]
   [languages.zh-cn]
@@ -24,14 +25,17 @@ summaryLength = 80
   defaultTheme = 'auto'
   DateFormat = '2006年1月2日'
   ShowReadingTime = true
-  ShowShareButtons = false
+  ShowShareButtons = true
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
   ShowRssButtonInSectionTermList = true
   ShowPageNums = true
-  ShowToc = false
+  ShowToc = true
   disableThemeToggle = false
+
+  [params.footer]
+    text = '普客网 · 记录技术折腾与日常'
 
   [params.homeInfoParams]
     Title = '欢迎来到普客网'
@@ -49,18 +53,43 @@ summaryLength = 80
 
 [menu]
   [[menu.main]]
+    identifier = 'home'
+    name = '首页'
+    url = '/'
+    weight = 5
+  [[menu.main]]
     identifier = 'posts'
     name = '文章'
     url = '/posts/'
     weight = 10
   [[menu.main]]
+    identifier = 'categories'
+    name = '分类'
+    url = '/categories/'
+    weight = 15
+  [[menu.main]]
+    identifier = 'tags'
+    name = '标签'
+    url = '/tags/'
+    weight = 20
+  [[menu.main]]
     identifier = 'archives'
     name = '归档'
     url = '/archives/'
-    weight = 20
+    weight = 30
+  [[menu.main]]
+    identifier = 'search'
+    name = '搜索'
+    url = '/search/'
+    weight = 40
+  [[menu.main]]
+    identifier = 'admin'
+    name = '后台'
+    url = '/admin/'
+    weight = 50
 
 [markup.goldmark.renderer]
   unsafe = true
 
 [outputs]
-  home = ['HTML', 'RSS']
+  home = ['HTML', 'RSS', 'JSON']
