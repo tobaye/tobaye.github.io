@@ -119,3 +119,26 @@ input#searchInput {
   border-radius: 50%;
   box-shadow: 0 6px 16px rgba(61, 126, 255, 0.35);
 }
+
+/* 顶栏菜单图标（仿 CorePress 的图标导航） */
+#menu a[href="/"]::before { content: "🏠 "; }
+#menu a[href="/posts/"]::before, #menu a[href$="/posts/"]::before { content: "📰 "; }
+#menu a[href="/categories/"]::before, #menu a[href$="/categories/"]::before { content: "🗂️ "; }
+#menu a[href="/tags/"]::before, #menu a[href$="/tags/"]::before { content: "🏷️ "; }
+#menu a[href="/archives/"]::before, #menu a[href$="/archives/"]::before { content: "🗄️ "; }
+#menu a[href="/search/"]::before, #menu a[href$="/search/"]::before { content: "🔍 "; }
+#menu a[href="/admin/"]::before, #menu a[href$="/admin/"]::before { content: "⚙️ "; }
+
+/* 文章信息行的小图标（日期/阅读时长/字数/作者） */
+.post-meta .meta-ico svg {
+  width: 14px;
+  height: 14px;
+  vertical-align: -2px;
+  margin-right: 3px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+}
