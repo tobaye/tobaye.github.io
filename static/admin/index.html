@@ -13,8 +13,18 @@
         --sui-font-family-default: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", system-ui, sans-serif !important;
       }
     </style>
+    <link rel="preload" href="/admin/fonts/material-symbols-outlined.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
     <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
+    <script>
+      // 图标字体自托管：Sveltia 默认从 jsdelivr 拉 Material Symbols 图标字体，拉不到时图标会显示成英文单词。
+      // 页面加载完成后追加一份同名的本地 @font-face（后声明者优先），让图标改走本站文件，不再依赖外部 CDN。
+      window.addEventListener('load', function () {
+        var s = document.createElement('style');
+        s.textContent = "@font-face{font-family:'Material Symbols Outlined';font-style:normal;font-weight:400;font-display:block;src:url('/admin/fonts/material-symbols-outlined.woff2') format('woff2');}";
+        document.head.appendChild(s);
+      });
+    </script>
   </body>
 </html>
