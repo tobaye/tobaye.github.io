@@ -18,22 +18,37 @@ collections:
     create: true
     delete: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    summary: "{{title}}（{{date | date('YYYY-MM-DD')}}）"
+    summary: "{{title}} · {{date | date('YYYY-MM-DD')}} · {{categories}}"
     sortable_fields:
       fields: [date, title]
       default:
         field: date
         direction: descending
     fields:
-      - { label: 标题, name: title, widget: string }
+      - { label: 标题, name: title, widget: string, hint: "文章标题，必填" }
       - label: 日期
         name: date
         widget: datetime
         format: "YYYY-MM-DD"
         date_format: "YYYY-MM-DD"
         time_format: false
-      - { label: 草稿, name: draft, widget: boolean, default: false, required: false }
-      - { label: 标签, name: tags, widget: list, required: false }
-      - { label: 分类, name: categories, widget: list, required: false }
-      - { label: 摘要, name: description, widget: text, required: false }
-      - { label: 正文, name: body, widget: markdown }
+        hint: "发布日期，一般保持默认即可"
+      - { label: 草稿, name: draft, widget: boolean, default: false, required: false, hint: "打开 = 存草稿不发布；关闭 = 正式发布" }
+      - label: 分类
+        name: categories
+        widget: select
+        multiple: true
+        required: false
+        options: [技术, 诗词, 日常, 工具, 随笔]
+        hint: "点选即可；需要新分类时告诉 Mi 加进选项"
+      - { label: 标签, name: tags, widget: list, required: false, hint: "输入一个按回车，可加多个" }
+      - label: 封面图
+        name: cover
+        widget: object
+        required: false
+        summary: "{{fields.image}}"
+        fields:
+          - { label: 图片, name: image, widget: image, required: false, hint: "从媒体库选或上传新图，显示在首页卡片和文章顶部" }
+          - { label: 图片说明, name: alt, widget: string, required: false, hint: "一句话描述这张图，可留空" }
+      - { label: 摘要, name: description, widget: text, required: false, hint: "一两句话概括文章，显示在文章列表里；不填会自动截取正文开头" }
+      - { label: 正文, name: body, widget: markdown, hint: "支持 Markdown 编辑，图片可以直接拖进来" }
