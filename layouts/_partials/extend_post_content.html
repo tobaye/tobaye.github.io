@@ -1,0 +1,28 @@
+{{- /* 普客网：相关文章（同分类的其他文章，最多 3 篇，无同类时不显示） */ -}}
+{{- if eq .Section "posts" }}
+  {{- $cats := .Params.categories | default slice }}
+  {{- if $cats }}
+    {{- $rel := slice }}
+    {{- range site.RegularPages }}
+      {{- if and (eq .Section "posts") (ne .Permalink $.Permalink) (intersect (.Params.categories | default slice) $cats) }}
+        {{- $rel = $rel | append . }}
+      {{- end }}
+    {{- end }}
+    {{- with first 3 $rel }}
+    <section class="cp-related">
+      <h2 class="cp-related-title">📚 相关文章</h2>
+      <div class="cp-related-grid">
+        {{- range . }}
+        <a class="cp-related-card" href="{{ .Permalink }}">
+          {{- if .Params.cover.image }}
+          <img src="{{ .Params.cover.image }}" alt="{{ .Params.cover.alt }}" loading="lazy">
+          {{- end }}
+          <span class="cp-related-name">{{ .Title }}</span>
+          <span class="cp-related-date">{{ .Date.Format "2006年1月2日" }}</span>
+        </a>
+        {{- end }}
+      </div>
+    </section>
+    {{- end }}
+  {{- end }}
+{{- end }}
