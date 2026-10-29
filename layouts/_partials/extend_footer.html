@@ -1,0 +1,12 @@
+<script>
+// 本站已运行天数：自 2026-10-29 正式上线起算，上线当天记为第 1 天
+(function () {
+  var el = document.getElementById('cp-uptime-days');
+  if (!el) return;
+  var start = new Date(2026, 9, 29);
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var days = Math.floor((today - start) / 86400000) + 1;
+  if (days > 0) el.textContent = days;
+})();
+</script>
