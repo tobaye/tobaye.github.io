@@ -293,3 +293,54 @@ body {
   border-radius: 8px;
 }
 ::-webkit-scrollbar-track { background: transparent; }
+
+/* ===== v2.1 修正与补充 ===== */
+
+/* 没有封面的文章卡片：不留空的封面列，文字占满整卡 */
+@media (min-width: 769px) {
+  .post-entry:not(.home-info):not(:has(.entry-cover)) {
+    display: block;
+  }
+}
+
+/* 相关文章（文章页底部，同分类推荐卡片） */
+.cp-related { margin-top: 36px; }
+.cp-related-title { font-size: 1.25rem; margin-bottom: 14px; }
+.cp-related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+.cp-related-card {
+  display: block;
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.cp-related-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(20, 30, 60, 0.1);
+}
+.cp-related-card img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  display: block;
+}
+.cp-related-name {
+  display: block;
+  padding: 10px 14px 2px;
+  font-weight: 700;
+  color: var(--primary);
+}
+.cp-related-date {
+  display: block;
+  padding: 0 14px 12px;
+  font-size: 0.82em;
+  color: var(--secondary);
+}
+
+/* 正文图片：可点击看大图 */
+.post-content img { cursor: zoom-in; }
