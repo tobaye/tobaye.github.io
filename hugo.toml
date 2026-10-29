@@ -90,11 +90,6 @@ summaryLength = 80
     name = '搜索'
     url = '/search/'
     weight = 40
-  [[menu.main]]
-    identifier = 'admin'
-    name = '后台'
-    url = '/admin/'
-    weight = 50
 
 [markup.goldmark.renderer]
   unsafe = true
