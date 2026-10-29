@@ -130,7 +130,7 @@ input#searchInput {
 #menu a[href="/admin/"]::before, #menu a[href$="/admin/"]::before { content: "⚙️ "; }
 
 /* 文章信息行的小图标（日期/阅读时长/字数/作者） */
-.post-meta .meta-ico svg {
+.meta-ico svg {
   width: 14px;
   height: 14px;
   vertical-align: -2px;
