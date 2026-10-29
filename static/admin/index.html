@@ -12,6 +12,14 @@
         --sui-base-hue: 222 !important;
         --sui-font-family-default: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", system-ui, sans-serif !important;
       }
+      /* 图标字体自托管（页面最前声明）：同名同权重，先声明者优先命中，抢在 Sveltia 的 jsdelivr 声明之前 */
+      @font-face {
+        font-family: 'Material Symbols Outlined';
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url('/admin/fonts/material-symbols-outlined.woff2') format('woff2');
+      }
     </style>
     <link rel="preload" href="/admin/fonts/material-symbols-outlined.woff2" as="font" type="font/woff2" crossorigin />
   </head>
