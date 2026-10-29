@@ -6,6 +6,13 @@
     <meta name="robots" content="noindex" />
     <title>普客网 · 内容后台</title>
     <link rel="icon" href="/images/logo.webp" />
+    <style>
+      /* 普客网后台换肤：主色调对齐前台蓝紫（Sveltia 全站配色由 --sui-base-hue 驱动），字体换中文友好栈 */
+      :root {
+        --sui-base-hue: 222 !important;
+        --sui-font-family-default: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", system-ui, sans-serif !important;
+      }
+    </style>
   </head>
   <body>
     <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
