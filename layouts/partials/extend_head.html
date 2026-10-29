@@ -4,3 +4,12 @@
 <script>
 document.addEventListener('DOMContentLoaded',function(){var bar=document.createElement('div');bar.id='reading-progress';document.body.appendChild(bar);function upd(){var h=document.documentElement;var max=h.scrollHeight-h.clientHeight;var y=h.scrollTop||document.body.scrollTop;bar.style.width=(max>0?(y/max*100):0)+'%';}document.addEventListener('scroll',upd,{passive:true});upd();});
 </script>
+<script>
+// 正文图片点击看大图（新窗口打开原图）
+document.addEventListener('click', function (e) {
+  var t = e.target;
+  if (t.tagName === 'IMG' && t.closest('.post-content')) {
+    window.open(t.currentSrc || t.src, '_blank');
+  }
+});
+</script>
