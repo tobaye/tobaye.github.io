@@ -170,3 +170,126 @@ input#searchInput {
   box-shadow: 0 4px 10px rgba(20, 30, 60, 0.25);
 }
 .cp-cat-badge:hover { color: #fff; opacity: 0.92; }
+
+/* ============================================
+   v2 美化（参考 Stack 卡片式布局 / CorePress 示例站）
+   中文字体排版、粘性顶栏、封面缩略图卡片、标题渐变、阅读舒适度
+   ============================================ */
+
+/* 全站中文字体栈与正文行高 */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC",
+    "Noto Sans CJK SC", sans-serif;
+}
+.post-content {
+  line-height: 1.9;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+}
+
+/* 粘性顶栏：毛玻璃 + 细分隔线 */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: var(--theme);
+  background: color-mix(in srgb, var(--theme) 86%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+/* 文章页与列表页大标题：蓝紫渐变字 */
+.post-title,
+.page-header h1 {
+  background: linear-gradient(90deg, var(--cp-blue), var(--cp-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 正文二级标题：渐变竖条（CorePress 式） */
+.post-content h2 {
+  padding-left: 12px;
+  border-left: 4px solid var(--cp-blue);
+  line-height: 1.4;
+}
+
+/* 列表卡片（桌面端）：左侧封面缩略图 + 右侧文字，仿 Stack 的裁剪缩略图 */
+@media (min-width: 769px) {
+  .post-entry:not(.home-info) {
+    display: grid;
+    grid-template-columns: 232px 1fr;
+    grid-template-areas:
+      "cover header"
+      "cover content"
+      "cover footer";
+    column-gap: 20px;
+    align-items: start;
+  }
+  .post-entry:not(.home-info) .entry-cover {
+    grid-area: cover;
+    margin: 0;
+    height: 100%;
+  }
+  .post-entry:not(.home-info) .entry-cover img {
+    width: 100%;
+    height: 100%;
+    max-height: 190px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  .post-entry:not(.home-info) .entry-header { grid-area: header; }
+  .post-entry:not(.home-info) .entry-content { grid-area: content; }
+  .post-entry:not(.home-info) .entry-footer { grid-area: footer; align-self: end; }
+}
+
+/* 列表卡片（手机端）：封面统一高度裁剪 */
+@media (max-width: 768px) {
+  .post-entry:not(.home-info) .entry-cover img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+  }
+}
+
+/* 首页欢迎卡：快捷按钮 */
+.cp-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 16px 0 6px;
+}
+.cp-btn {
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--entry);
+  color: var(--primary);
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+.cp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(20, 30, 60, 0.12);
+  color: var(--primary);
+}
+.cp-btn-primary {
+  background: linear-gradient(90deg, var(--cp-blue), var(--cp-violet));
+  border: none;
+  color: #fff;
+}
+.cp-btn-primary:hover { color: #fff; opacity: 0.94; }
+
+/* 选中文字与滚动条：品牌色小点缀 */
+::selection {
+  background: rgba(61, 126, 255, 0.28);
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--cp-blue), var(--cp-violet));
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track { background: transparent; }
