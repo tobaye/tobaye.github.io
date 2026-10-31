@@ -44,6 +44,9 @@ summaryLength = 80
   [[params.socialIcons]]
     name = 'rss'
     url = '/index.xml'
+  [[params.socialIcons]]
+    name = 'mail'
+    url = 'mailto:lgln@outlook.it'
 
   [params.homeInfoParams]
     Title = '欢迎来到普客网'
