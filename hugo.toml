@@ -46,7 +46,7 @@ summaryLength = 80
     url = '/index.xml'
   [[params.socialIcons]]
     name = 'mail'
-    url = 'mailto:lgln@outlook.it'
+    url = 'mailto:tobaye@outlook.sg'
 
   [params.homeInfoParams]
     Title = '欢迎来到普客网'
