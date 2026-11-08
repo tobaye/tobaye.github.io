@@ -12,14 +12,15 @@
         document.documentElement.dataset.theme = t;
       } catch (e) { document.documentElement.dataset.theme = 'dark'; }
     })();
-    // 开场动画引导：仅本会话首次访问且未启用减动效时才给 <html> 打标记，CSS 据此显示 #preloader
+    {{- if .IsHome }}
+    // 开场动画引导：只在首页播、每次打开首页都播（无会话抑制）；未启用减动效时才给 <html> 打标记，CSS 据此显示 #preloader
     (function () {
       try {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        if (sessionStorage.getItem('tobpage-loaded')) return;
         document.documentElement.classList.add('show-preloader');
       } catch (e) {}
     })();
+    {{- end }}
   </script>
   <title>{{ if .IsHome }}{{ site.Title }} · {{ site.Params.description }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
   <meta name="description" content="{{ .Description | default site.Params.description }}">
@@ -38,6 +39,7 @@
   <link rel="stylesheet" href="{{ "css/tobpage.css" | relURL }}">
 </head>
 <body>
+  {{- if .IsHome }}
   <div id="preloader" aria-hidden="true">
     <div class="pl-inner">
       <svg class="pl-swirl" viewBox="0 0 240 240" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
@@ -73,6 +75,7 @@
       if (p) { p.classList.add('pl-done'); setTimeout(function () { p.remove(); }, 600); }
     }, 3000);
   </script>
+  {{- end }}
   {{ partial "icon-sprite.html" . }}
   <div id="reading-progress" aria-hidden="true"></div>
   {{ partial "header.html" . }}
