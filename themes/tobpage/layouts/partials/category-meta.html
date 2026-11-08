@@ -1,0 +1,35 @@
+{{- /* ============================================================
+     分类元数据 · 全站唯一定义处
+     用法：{{ $meta := partial "category-meta.html" . }}
+     返回 dict：
+       .parents — 父栏目有序列表，每项 dict(name/icon/color/children[叶子分类名…])
+       .cats    — 叶子分类 dict：分类名 → dict(parent/icon/color)
+     改分类体系只改这一处：页眉下拉、分类索引分组、卡片/文章页胶囊、
+     分类页徽章、侧栏分类列表全部跟着变。
+     父栏目本身不是 Hugo 分类（文章只挂叶子分类），父项在导航与
+     索引页里链向 /categories/ 对应分组锚点（#g-<父名>）。
+     ============================================================ */ -}}
+{{- $parents := slice
+  (dict "name" "文章" "icon" "feather" "color" "#8b5cf6" "children" (slice "古诗词" "现代诗" "散文随笔" "小说故事"))
+  (dict "name" "技术" "icon" "code" "color" "#3b82f6" "children" (slice "运维部署" "编程开发" "经验教程"))
+  (dict "name" "软件" "icon" "layout-grid" "color" "#14b8a6" "children" (slice "软件推荐" "开源项目" "工具分享"))
+  (dict "name" "资讯" "icon" "newspaper" "color" "#ef4444" "children" (slice "科技新闻" "站务公告"))
+  (dict "name" "日常" "icon" "coffee" "color" "#fb923c" "children" (slice "生活随记" "见闻杂记"))
+-}}
+{{- $cats := dict
+  "古诗词"   (dict "parent" "文章" "icon" "scroll" "color" "#7c3aed")
+  "现代诗"   (dict "parent" "文章" "icon" "pen-nib" "color" "#06b6d4")
+  "散文随笔" (dict "parent" "文章" "icon" "leaf" "color" "#22c55e")
+  "小说故事" (dict "parent" "文章" "icon" "book-open" "color" "#f59e0b")
+  "运维部署" (dict "parent" "技术" "icon" "server" "color" "#0ea5e9")
+  "编程开发" (dict "parent" "技术" "icon" "terminal" "color" "#6366f1")
+  "经验教程" (dict "parent" "技术" "icon" "lightbulb" "color" "#f97316")
+  "软件推荐" (dict "parent" "软件" "icon" "star" "color" "#10b981")
+  "开源项目" (dict "parent" "软件" "icon" "package" "color" "#64748b")
+  "工具分享" (dict "parent" "软件" "icon" "wrench" "color" "#84cc16")
+  "科技新闻" (dict "parent" "资讯" "icon" "rss" "color" "#f43f5e")
+  "站务公告" (dict "parent" "资讯" "icon" "megaphone" "color" "#eab308")
+  "生活随记" (dict "parent" "日常" "icon" "sun" "color" "#f59e0b")
+  "见闻杂记" (dict "parent" "日常" "icon" "camera" "color" "#ec4899")
+-}}
+{{- return (dict "parents" $parents "cats" $cats) -}}

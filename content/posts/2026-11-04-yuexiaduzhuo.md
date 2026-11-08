@@ -3,7 +3,7 @@ title: "月下独酌四首 · 李白"
 date: 2026-11-04T06:05:00+08:00
 draft: false
 tags: ["李白", "唐诗", "古诗词"]
-categories: ["诗词"]
+categories: ["古诗词"]
 description: "李白《月下独酌》四首全文、白话翻译与赏析：花间一壶酒，举杯邀明月，对影成三人——一个人喝酒，喝出了满席的热闹，也喝尽了无边的孤独。"
 cover:
   image: "/images/uploads/yuexiaduzhuo-hero.jpg"

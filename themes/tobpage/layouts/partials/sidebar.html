@@ -1,0 +1,58 @@
+<aside class="sidebar">
+  {{- if and .IsPage .TableOfContents }}
+  {{- if strings.Contains .TableOfContents "<li>" }}
+  <div class="widget toc-widget">
+    <div class="widget-title">目录</div>
+    <div class="toc-body">{{ .TableOfContents }}</div>
+  </div>
+  {{- end }}
+  {{- end }}
+
+  <div class="widget author-card">
+    {{- with site.Params.label.icon }}
+    <img class="author-avatar" src="{{ . }}" alt="{{ site.Title }}">
+    {{- end }}
+    <div class="author-name">{{ site.Params.label.text | default site.Title }}</div>
+    <p class="author-desc">{{ site.Params.description }}</p>
+    <div class="author-stats">
+      <div><strong>{{ len (where site.RegularPages "Section" "posts") }}</strong><span>文章</span></div>
+      <div><strong>{{ len site.Taxonomies.categories }}</strong><span>分类</span></div>
+      <div><strong>{{ len site.Taxonomies.tags }}</strong><span>标签</span></div>
+    </div>
+    {{ partial "social-icons.html" . }}
+  </div>
+
+  <div class="widget">
+    <div class="widget-title">分类</div>
+    <ul class="cat-list">
+      {{- $cats := (partial "category-meta.html" .).cats -}}
+      {{- range site.Taxonomies.categories.Alphabetical }}
+      {{- $cm := index $cats .Page.Title -}}
+      <li><a href="{{ .Page.RelPermalink }}">{{ if $cm }}{{ partial "icon.html" (dict "name" $cm.icon "size" 15 "color" $cm.color) }}{{ else }}{{ partial "icon.html" (dict "name" "folder" "size" 15 "color" "#c9a24b") }}{{ end }}<span>{{ .Page.Title }}</span><span class="cat-count">{{ .Count }}</span></a></li>
+      {{- end }}
+    </ul>
+  </div>
+
+  {{- with site.Taxonomies.tags.Alphabetical }}
+  <div class="widget">
+    <div class="widget-title">标签</div>
+    <div class="tag-cloud">
+      {{- range . }}
+      <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}<sup>{{ .Count }}</sup></a>
+      {{- end }}
+    </div>
+  </div>
+  {{- end }}
+
+  <div class="widget">
+    <div class="widget-title">最新文章</div>
+    <ul class="recent-list">
+      {{- range first 5 (where site.RegularPages "Section" "posts") }}
+      <li>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (site.Params.DateFormat | default "2006年1月2日") }}</time>
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+</aside>

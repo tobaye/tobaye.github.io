@@ -1,0 +1,13 @@
+{{ define "main" }}
+<div class="container container-narrow">
+  <header class="list-header">
+    <h1>{{ .Title }}</h1>
+  </header>
+  <div class="search-box">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+    <input id="search-input" type="search" placeholder="{{ .Params.placeholder | default "输入关键词搜索文章…" }}" autocomplete="off" autofocus data-index="{{ "index.json" | relURL }}">
+  </div>
+  <p class="search-hint" id="search-hint">在全部文章的标题、正文、分类与标签里搜索。</p>
+  <div id="search-results" class="search-results"></div>
+</div>
+{{ end }}

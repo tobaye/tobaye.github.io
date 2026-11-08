@@ -1,6 +1,6 @@
 baseURL = 'https://puke.eu.org/'
 title = '普客网'
-theme = 'PaperMod'
+theme = 'tobpage'
 defaultContentLanguage = 'zh-cn'
 timeZone = 'Asia/Shanghai'
 
@@ -61,6 +61,12 @@ summaryLength = 80
     favicon = '/images/logo.webp'
     favicon16x16 = '/images/logo.webp'
     favicon32x32 = '/images/logo.webp'
+
+  [params.tobpage]
+    heroMotto = '普天之下，皆为客'
+    startDate = '2026-10-29'
+    moeIcp = '萌ICP备20269123号'
+    moeIcpURL = 'https://icp.gov.moe/?keyword=20269123'
 
 [menu]
   [[menu.main]]

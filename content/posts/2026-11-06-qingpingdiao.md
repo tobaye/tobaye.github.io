@@ -3,7 +3,7 @@ title: "清平调词三首 · 李白"
 date: 2026-11-06T21:02:00+08:00
 draft: false
 tags: ["李白", "唐诗", "古诗词"]
-categories: ["诗词"]
+categories: ["古诗词"]
 description: "李白《清平调词》三首全文、白话翻译与赏析：云想衣裳花想容，春风拂槛露华浓——奉诏为杨贵妃与牡丹而作，人比花娇，花因人贵。"
 cover:
   image: "/images/uploads/qingpingdiao-hero.jpg"

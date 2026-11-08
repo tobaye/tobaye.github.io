@@ -1,0 +1,15 @@
+name = "Tobpage"
+license = "MIT"
+licenselink = "https://github.com/tobaye"
+description = "普客网自研 Hugo 主题：Butterfly × AnZhiYu 骨架，暗黑西游皮肤（墨黑 / 鎏金 / 朱砂）。"
+homepage = "https://puke.eu.org/"
+min_version = "0.120.0"
+demosite = "https://puke.eu.org"
+
+[author]
+  name = "tobaye"
+  homepage = "https://puke.eu.org/"
+
+[original]
+  name = "Butterfly × AnZhiYu（设计参考）"
+  homepage = "https://github.com/anzhiyu-c/hexo-theme-anzhiyu"

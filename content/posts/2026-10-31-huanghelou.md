@@ -3,7 +3,7 @@ title: "黄鹤楼 · 崔颢"
 date: 2026-10-31
 draft: false
 tags: ["崔颢", "唐诗", "古诗词"]
-categories: ["诗词"]
+categories: ["古诗词"]
 description: "崔颢《黄鹤楼》全文、白话翻译与赏析：昔人已乘黄鹤去，此地空余黄鹤楼——让李白搁笔、被严羽推为唐人七律第一的登楼绝唱。"
 cover:
   image: "/images/uploads/huanghelou-hero.jpg"

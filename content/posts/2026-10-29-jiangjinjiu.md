@@ -3,7 +3,7 @@ title: "将进酒 · 李白"
 date: 2026-10-29T00:23:00+08:00
 draft: false
 tags: ["李白", "唐诗", "古诗词"]
-categories: ["诗词"]
+categories: ["古诗词"]
 description: "李白《将进酒》全文、白话翻译与赏析：黄河之水天上来，奔流到海不复回——一首把悲愤唱成豪放的千古绝唱。"
 cover:
   image: "/images/uploads/jiangjinjiu-hero.jpg"

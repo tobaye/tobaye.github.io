@@ -1,0 +1,34 @@
+{{ define "main" }}
+<div class="container">
+  <header class="list-header">
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}<p>{{ . }}</p>{{ end }}
+  </header>
+
+  {{- $pages := where site.RegularPages "Section" "posts" }}
+  {{- $months := slice "" "一月" "二月" "三月" "四月" "五月" "六月" "七月" "八月" "九月" "十月" "十一月" "十二月" }}
+  <div class="timeline">
+    {{- range $pages.GroupByPublishDate "2006" }}
+    {{- if ne .Key "0001" }}
+    {{- $year := .Key }}
+    <section class="timeline-year">
+      <h2 class="timeline-year-title">{{ $year }} 年<span class="timeline-count">{{ len .Pages }} 篇</span></h2>
+      {{- range .Pages.GroupByDate "01" }}
+      <div class="timeline-month">
+        <h3 class="timeline-month-title">{{ index $months (int .Key) }}<span class="timeline-count">{{ len .Pages }} 篇</span></h3>
+        <ul class="timeline-list">
+          {{- range .Pages }}
+          <li>
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "01-02" }}</time>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </li>
+          {{- end }}
+        </ul>
+      </div>
+      {{- end }}
+    </section>
+    {{- end }}
+    {{- end }}
+  </div>
+</div>
+{{ end }}

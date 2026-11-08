@@ -3,7 +3,7 @@ title: "蜀道难 · 李白"
 date: 2026-10-30T15:24:00+08:00
 draft: false
 tags: ["李白", "唐诗", "古诗词"]
-categories: ["诗词"]
+categories: ["古诗词"]
 description: "李白乐府名篇《蜀道难》：原文、白话翻译、赏析与古人点评。噫吁嚱，危乎高哉！蜀道之难，难于上青天！"
 cover:
   image: "/images/uploads/shudaonan-hero.jpg"

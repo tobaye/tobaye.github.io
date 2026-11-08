@@ -3,7 +3,7 @@ title: "行路难 · 李白"
 date: 2026-10-31
 draft: false
 tags: ["李白", "唐诗", "古诗词"]
-categories: ["诗词"]
+categories: ["古诗词"]
 description: "李白《行路难·其一》全文、白话翻译与赏析：长风破浪会有时，直挂云帆济沧海——一首把茫然写成豪迈的短歌行。"
 cover:
   image: "/images/uploads/xinglunan-hero.jpg"

@@ -1,0 +1,100 @@
+{{ define "main" }}
+{{- if eq .Kind "term" }}
+{{/* 单个分类/标签页：分类页带彩色大图标徽章（元数据取自 category-meta.html） */}}
+{{- $cm := false -}}
+{{- if eq .Data.Plural "categories" -}}
+  {{- $cm = index (partial "category-meta.html" .).cats .Title -}}
+{{- end -}}
+<div class="container layout-2col">
+  <div class="content-col">
+    <header class="list-header term-header">
+      {{- with $cm }}
+      <div class="term-badge" style="--cat: {{ .color }}">{{ partial "icon.html" (dict "name" .icon "size" 34 "color" .color) }}</div>
+      {{- end }}
+      <div class="term-heading">
+        <h1>{{ .Title }}</h1>
+        <p>{{ with $cm }}所属栏目：{{ .parent }} · {{ end }}共 {{ len .Pages }} 篇文章</p>
+      </div>
+    </header>
+    {{- range .Paginator.Pages }}
+    {{ partial "post-card.html" . }}
+    {{- end }}
+    {{ partial "pagination.html" . }}
+  </div>
+  {{ partial "sidebar.html" . }}
+</div>
+{{- else if eq .Data.Plural "categories" }}
+{{/* 分类索引页：按父栏目分组——父标题（图标+色）+ 子分类卡（大图标/名称/篇数） */}}
+{{- $meta := partial "category-meta.html" . -}}
+{{- $byTitle := dict -}}
+{{- range .Pages -}}
+  {{- $byTitle = merge $byTitle (dict .Title .) -}}
+{{- end -}}
+<div class="container">
+  <header class="list-header">
+    <h1>{{ .Title }}</h1>
+    <p>五大栏目 · {{ len $meta.cats }} 个分类</p>
+  </header>
+  {{- range $meta.parents }}
+  {{- $p := . }}
+  <section class="cat-group" id="g-{{ $p.name }}">
+    <h2 class="cat-group-title">{{ partial "icon.html" (dict "name" $p.icon "size" 21 "color" $p.color) }}<span>{{ $p.name }}</span></h2>
+    <div class="term-grid">
+      {{- range $p.children }}
+      {{- $cm := index $meta.cats . }}
+      {{- $term := index $byTitle . }}
+      {{- if $term }}
+      <a class="term-card cat-card" style="--cat: {{ $cm.color }}" href="{{ $term.RelPermalink }}">
+        <span class="cat-card-icon">{{ partial "icon.html" (dict "name" $cm.icon "size" 30 "color" $cm.color) }}</span>
+        <span class="term-name">{{ . }}</span>
+        <span class="term-count">{{ len $term.Pages }} 篇</span>
+      </a>
+      {{- else }}
+      <div class="term-card cat-card is-empty" style="--cat: {{ $cm.color }}">
+        <span class="cat-card-icon">{{ partial "icon.html" (dict "name" $cm.icon "size" 30 "color" $cm.color) }}</span>
+        <span class="term-name">{{ . }}</span>
+        <span class="term-count">暂无文章</span>
+      </div>
+      {{- end }}
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+  {{- /* 未登记进分类体系的分类（如旧分类残留）单列一组，不藏匿 */ -}}
+  {{- $extra := slice -}}
+  {{- range .Pages -}}
+    {{- if not (index $meta.cats .Title) -}}{{- $extra = append $extra . -}}{{- end -}}
+  {{- end -}}
+  {{- with $extra }}
+  <section class="cat-group" id="g-其他">
+    <h2 class="cat-group-title">{{ partial "icon.html" (dict "name" "folder" "size" 21 "color" "#c9a24b") }}<span>其他</span></h2>
+    <div class="term-grid">
+      {{- range . }}
+      <a class="term-card cat-card" style="--cat: #c9a24b" href="{{ .RelPermalink }}">
+        <span class="cat-card-icon">{{ partial "icon.html" (dict "name" "folder" "size" 30 "color" "#c9a24b") }}</span>
+        <span class="term-name">{{ .Title }}</span>
+        <span class="term-count">{{ len .Pages }} 篇</span>
+      </a>
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+</div>
+{{- else }}
+{{/* 标签索引页：条目卡片网格（原样） */}}
+<div class="container">
+  <header class="list-header">
+    <h1>{{ .Title }}</h1>
+    <p>共 {{ len .Pages }} 个</p>
+  </header>
+  <div class="term-grid">
+    {{- range .Pages }}
+    <a class="term-card" href="{{ .RelPermalink }}">
+      <span class="term-name">{{ .Title }}</span>
+      <span class="term-count">{{ len .Pages }} 篇</span>
+    </a>
+    {{- end }}
+  </div>
+</div>
+{{- end }}
+{{ end }}

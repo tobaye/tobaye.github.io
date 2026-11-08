@@ -1,0 +1,40 @@
+<footer class="site-footer">
+  <div class="footer-clouds" aria-hidden="true"></div>
+  <div class="footer-inner">
+    <div class="footer-col footer-about">
+      <div class="footer-brand">{{ site.Title }}</div>
+      {{- with site.Params.footer.text }}
+      <p class="footer-text">{{ . }}</p>
+      {{- end }}
+      {{ partial "social-icons.html" . }}
+    </div>
+    <div class="footer-col">
+      <div class="footer-title">导航</div>
+      <ul class="footer-links">
+        {{- range site.Menus.main }}
+        <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+        {{- end }}
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-title">小站数据</div>
+      <ul class="footer-stats">
+        <li>文章 {{ len (where site.RegularPages "Section" "posts") }} 篇</li>
+        <li>分类 {{ len site.Taxonomies.categories }} 个</li>
+        <li>标签 {{ len site.Taxonomies.tags }} 个</li>
+        {{- with site.Params.tobpage.startDate }}
+        <li>本站已运行 <span id="site-uptime-days" data-start="{{ . }}">1</span> 天</li>
+        {{- end }}
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; {{ now.Year }} <a href="{{ "" | relURL }}">{{ site.Title }}</a></span>
+    <span class="dot">·</span>
+    <span>由 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 驱动</span>
+    {{- with site.Params.tobpage.moeIcp }}
+    <span class="dot">·</span>
+    <span>{{ with site.Params.tobpage.moeIcpURL }}<a href="{{ . }}" target="_blank" rel="noopener">{{ end }}{{ $.Site.Params.tobpage.moeIcp }}{{ with site.Params.tobpage.moeIcpURL }}</a>{{ end }}</span>
+    {{- end }}
+  </div>
+</footer>

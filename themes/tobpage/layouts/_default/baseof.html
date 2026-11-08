@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale | default "zh-CN" }}" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    // 主题引导：默认暗色（暗黑西游气质），localStorage 记忆，防闪烁
+    (function () {
+      try {
+        var t = localStorage.getItem('tobpage-theme');
+        if (t !== 'light' && t !== 'dark') t = 'dark';
+        document.documentElement.dataset.theme = t;
+      } catch (e) { document.documentElement.dataset.theme = 'dark'; }
+    })();
+    // 开场动画引导：仅本会话首次访问且未启用减动效时才给 <html> 打标记，CSS 据此显示 #preloader
+    (function () {
+      try {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (sessionStorage.getItem('tobpage-loaded')) return;
+        document.documentElement.classList.add('show-preloader');
+      } catch (e) {}
+    })();
+  </script>
+  <title>{{ if .IsHome }}{{ site.Title }} · {{ site.Params.description }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ .Description | default site.Params.description }}">
+  <meta property="og:title" content="{{ .Title | default site.Title }}">
+  <meta property="og:description" content="{{ .Description | default site.Params.description }}">
+  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  {{- with site.Params.assets.favicon }}
+  <link rel="icon" href="{{ . }}">
+  {{- end }}
+  {{- range .AlternativeOutputFormats }}
+  {{- if eq .Rel "alternate" }}
+  <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}">
+  {{- end }}
+  {{- end }}
+  <link rel="stylesheet" href="{{ "css/tobpage.css" | relURL }}">
+</head>
+<body>
+  <div id="preloader" aria-hidden="true">
+    <div class="pl-inner">
+      <svg class="pl-swirl" viewBox="0 0 240 240" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <g transform="translate(120 120)">
+          <path d="M0,-52 a52,52 0 1,1 -52,52 a40,40 0 1,0 40,-40 a28,28 0 1,1 -28,28 a16,16 0 1,0 16,-16"/>
+        </g>
+        <g transform="translate(38 178) scale(.55)">
+          <path d="M0,-52 a52,52 0 1,1 -52,52 a40,40 0 1,0 40,-40 a28,28 0 1,1 -28,28 a16,16 0 1,0 16,-16"/>
+        </g>
+        <g transform="translate(202 178) scale(.55)">
+          <path d="M0,-52 a52,52 0 1,1 -52,52 a40,40 0 1,0 40,-40 a28,28 0 1,1 -28,28 a16,16 0 1,0 16,-16"/>
+        </g>
+      </svg>
+      <div class="pl-fly">
+        <img class="pl-wukong pl-img-a" src="{{ "img/loader-wukong.jpg" | relURL }}" alt="" width="660" height="778">
+        <img class="pl-wukong pl-img-b" src="{{ "img/loader-arrive.jpg" | relURL }}" alt="" width="660" height="778" aria-hidden="true">
+      </div>
+      <div class="pl-name">{{ site.Params.label.text | default site.Title }}</div>
+      {{- with site.Params.tobpage.heroMotto }}
+      <div class="pl-motto">{{ . }}<span class="motto-seal" aria-hidden="true"></span></div>
+      {{- end }}
+      <div class="pl-bar"><span></span></div>
+    </div>
+  </div>
+  <script>
+    // 开场动画兜底：主脚本若未加载，两段式时序也必须走通——1.9 秒强制切到收尾图，3 秒硬上限强制退场，绝不挡正文
+    setTimeout(function () {
+      var p = document.getElementById('preloader');
+      if (p) p.classList.add('pl-arrive');
+    }, 1900);
+    setTimeout(function () {
+      var p = document.getElementById('preloader');
+      if (p) { p.classList.add('pl-done'); setTimeout(function () { p.remove(); }, 600); }
+    }, 3000);
+  </script>
+  {{ partial "icon-sprite.html" . }}
+  <div id="reading-progress" aria-hidden="true"></div>
+  {{ partial "header.html" . }}
+  <main class="site-main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  <button id="back-to-top" type="button" aria-label="回到顶部" title="回到顶部">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 11 12 6 7 11"></polyline><polyline points="17 18 12 13 7 18"></polyline></svg>
+  </button>
+  <script src="{{ "js/tobpage.js" | relURL }}" defer></script>
+</body>
+</html>

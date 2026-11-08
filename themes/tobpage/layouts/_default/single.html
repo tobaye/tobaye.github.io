@@ -1,0 +1,60 @@
+{{ define "main" }}
+<div class="container layout-2col">
+  <article class="post content-col">
+    <nav class="breadcrumbs" aria-label="面包屑">
+      <a href="{{ "" | relURL }}">首页</a>
+      {{- with .Params.categories }}
+      {{- range first 1 . }}
+      <span>/</span><a href="{{ printf "/categories/%s/" (urlize .) | relURL }}">{{ . }}</a>
+      {{- end }}
+      {{- end }}
+      <span>/</span><span class="crumb-current">{{ .Title }}</span>
+    </nav>
+
+    <h1 class="post-title">{{ .Title }}</h1>
+
+    {{- /* 中文字数：按去空白后的字符数计（Hugo 自带 .WordCount 对中文按空格分词，不准） */ -}}
+    {{- $wc := strings.RuneCount (replaceRE `\s+` "" .Plain) }}
+    {{- $rt := div (add $wc 299) 300 }}
+    <div class="post-meta">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (site.Params.DateFormat | default "2006年1月2日") }}</time>
+      <span class="meta-sep">·</span><span>全文 {{ $wc }} 字</span>
+      <span class="meta-sep">·</span><span>约 {{ $rt }} 分钟读完</span>
+      {{- with .Params.categories }}
+      <span class="meta-sep">·</span>
+      {{- range . }}{{ partial "cat-chip.html" . }}{{ end }}
+      {{- end }}
+    </div>
+
+    {{- with .Params.cover.image }}
+    <figure class="post-cover">
+      <img src="{{ . }}" alt="{{ $.Params.cover.alt | default $.Title }}">
+    </figure>
+    {{- end }}
+
+    <div class="post-content">
+      {{ .Content }}
+    </div>
+
+    {{- with .Params.tags }}
+    <div class="post-tags">
+      {{- range . }}
+      <a href="{{ printf "/tags/%s/" (urlize .) | relURL }}"># {{ . }}</a>
+      {{- end }}
+    </div>
+    {{- end }}
+
+    {{- if or .PrevInSection .NextInSection }}
+    <nav class="post-nav" aria-label="上一篇下一篇">
+      {{- with .PrevInSection }}
+      <a class="post-nav-link prev" href="{{ .RelPermalink }}"><span>← 上一篇</span><strong>{{ .Title }}</strong></a>
+      {{- end }}
+      {{- with .NextInSection }}
+      <a class="post-nav-link next" href="{{ .RelPermalink }}"><span>下一篇 →</span><strong>{{ .Title }}</strong></a>
+      {{- end }}
+    </nav>
+    {{- end }}
+  </article>
+  {{ partial "sidebar.html" . }}
+</div>
+{{ end }}

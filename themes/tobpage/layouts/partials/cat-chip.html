@@ -1,0 +1,17 @@
+{{- /* 分类胶囊：{{ partial "cat-chip.html" "古诗词" }}
+     图标与颜色取自 category-meta.html；未登记的分类回退 tag 图标 + 鎏金。
+     链接优先用该分类 term 页的真实 RelPermalink（兼容子路径 baseURL），无此分类时回退拼路径。 */ -}}
+{{- $name := . -}}
+{{- $cats := (partial "category-meta.html" .).cats -}}
+{{- $icon := "tag" -}}
+{{- $color := "#c9a24b" -}}
+{{- with index $cats $name -}}
+  {{- $icon = .icon -}}
+  {{- $color = .color -}}
+{{- end -}}
+{{- $url := "" -}}
+{{- range site.Taxonomies.categories.Alphabetical -}}
+  {{- if eq .Page.Title $name -}}{{- $url = .Page.RelPermalink -}}{{- end -}}
+{{- end -}}
+{{- if not $url -}}{{- $url = printf "/categories/%s/" (urlize $name) | relURL -}}{{- end -}}
+<a class="meta-cat cat-chip" style="--cat: {{ $color }}" href="{{ $url }}">{{ partial "icon.html" (dict "name" $icon "size" 13) }}<span>{{ $name }}</span></a>

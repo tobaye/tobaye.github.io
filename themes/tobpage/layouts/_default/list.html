@@ -1,0 +1,16 @@
+{{ define "main" }}
+<div class="container layout-2col">
+  <div class="content-col">
+    <header class="list-header">
+      <h1>{{ .Title }}</h1>
+      {{- with .Description }}<p>{{ . }}</p>{{ end }}
+      {{- with .Content }}<div class="list-desc">{{ . }}</div>{{ end }}
+    </header>
+    {{- range .Paginator.Pages }}
+    {{ partial "post-card.html" . }}
+    {{- end }}
+    {{ partial "pagination.html" . }}
+  </div>
+  {{ partial "sidebar.html" . }}
+</div>
+{{ end }}
