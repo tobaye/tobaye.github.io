@@ -1,6 +1,7 @@
 name = "Tobpage"
+version = "1.0.0"
 license = "MIT"
-licenselink = "https://github.com/tobaye"
+licenselink = "https://github.com/tobaye/Tobpage/blob/main/LICENSE"
 description = "普客网自研 Hugo 主题：Butterfly × AnZhiYu 骨架，暗黑西游皮肤（墨黑 / 鎏金 / 朱砂）。"
 homepage = "https://puke.eu.org/"
 min_version = "0.120.0"
