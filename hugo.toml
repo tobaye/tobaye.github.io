@@ -63,7 +63,7 @@ summaryLength = 80
     favicon32x32 = '/images/logo.webp'
 
   [params.tobpage]
-    heroMotto = '普天之下，皆为客'
+    heroMotto = '普天之下，皆为客。'
     startDate = '2026-10-29'
     moeIcp = '萌ICP备20269123号'
     moeIcpURL = 'https://icp.gov.moe/?keyword=20269123'
