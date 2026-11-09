@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="{{ site.Language.Locale | default "zh-CN" }}" data-theme="dark">
+<html lang="{{ site.Language.Locale | default "zh-CN" }}" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
-    // 主题引导：默认暗色（暗黑西游气质），localStorage 记忆，防闪烁
+    // 主题引导：默认浅色（2026-11-09 定），localStorage 记忆，防闪烁
     (function () {
       try {
         var t = localStorage.getItem('tobpage-theme');
-        if (t !== 'light' && t !== 'dark') t = 'dark';
+        if (t !== 'light' && t !== 'dark') t = 'light';
         document.documentElement.dataset.theme = t;
-      } catch (e) { document.documentElement.dataset.theme = 'dark'; }
+      } catch (e) { document.documentElement.dataset.theme = 'light'; }
     })();
     {{- if .IsHome }}
     // 开场动画引导：只在首页播、每次打开首页都播（无会话抑制）；未启用减动效时才给 <html> 打标记，CSS 据此显示 #preloader
