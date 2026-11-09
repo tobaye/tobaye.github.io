@@ -62,7 +62,7 @@
       </div>
       <div class="pl-name">{{ site.Params.label.text | default site.Title }}</div>
       {{- with site.Params.tobpage.heroMotto }}
-      <div class="pl-motto">{{ . }}<span class="motto-seal" aria-hidden="true"></span></div>
+      <div class="pl-motto">{{ . }}{{- with site.Params.tobpage.sealText }}<span class="site-seal seal-loader" aria-hidden="true">{{ substr . 0 2 }}<br>{{ substr . 2 }}</span>{{ end }}</div>
       {{- end }}
       <div class="pl-bar"><span></span></div>
     </div>
