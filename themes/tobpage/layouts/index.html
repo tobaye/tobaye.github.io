@@ -3,9 +3,12 @@
 <section class="hero" style="--hero-img: url('{{ $heroImg }}')">
   <div class="hero-shade"></div>
   <div class="hero-content">
-    <h1 class="hero-title">{{ site.Title }}</h1>
+    <div class="hero-title-wrap">
+      <h1 class="hero-title">{{ site.Title }}</h1>
+      {{- with site.Params.tobpage.sealText }}<span class="site-seal seal-hero" aria-hidden="true">{{ substr . 0 2 }}<br>{{ substr . 2 }}</span>{{ end }}
+    </div>
     {{- with site.Params.tobpage.heroMotto }}
-    <p class="hero-motto">{{ . }}{{- with site.Params.tobpage.sealText }}<span class="site-seal seal-hero" aria-hidden="true">{{ substr . 0 2 }}<br>{{ substr . 2 }}</span>{{ end }}</p>
+    <p class="hero-motto">{{ . }}</p>
     {{- end }}
     <p class="hero-sub">{{ site.Params.homeInfoParams.Content | default site.Params.description }}</p>
     <div class="hero-stats">
