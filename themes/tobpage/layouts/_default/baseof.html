@@ -4,11 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
-    // 主题引导：默认浅色（2026-11-09 定），localStorage 记忆，防闪烁
+    // 主题引导：按访客本地时间自适应（2026-11-09 定）——7:00–19:00 浅色、其余深色；localStorage 手动偏好优先，防闪烁
     (function () {
       try {
         var t = localStorage.getItem('tobpage-theme');
-        if (t !== 'light' && t !== 'dark') t = 'light';
+        if (t !== 'light' && t !== 'dark') {
+          var h = new Date().getHours();
+          t = (h >= 7 && h < 19) ? 'light' : 'dark';
+        }
         document.documentElement.dataset.theme = t;
       } catch (e) { document.documentElement.dataset.theme = 'light'; }
     })();
