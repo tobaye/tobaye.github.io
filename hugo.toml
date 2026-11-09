@@ -50,7 +50,7 @@ summaryLength = 80
 
   [params.homeInfoParams]
     Title = '欢迎来到普客网'
-    Content = '这里是 Yet Bai 的个人小站，写写技术折腾、工具和日常。'
+    Content = '这里是我的个人小站，写写技术折腾、工具和日常。'
 
   [params.label]
     text = '普客网'
