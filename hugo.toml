@@ -64,6 +64,7 @@ summaryLength = 80
 
   [params.tobpage]
     heroMotto = '普天之下，皆为客。'
+    sealText = '普客网印'
     startDate = '2026-10-29'
     moeIcp = '萌ICP备20269123号'
     moeIcpURL = 'https://icp.gov.moe/?keyword=20269123'
