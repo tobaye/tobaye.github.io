@@ -60,10 +60,11 @@
         <img class="pl-wukong pl-img-a" src="{{ "img/loader-wukong.jpg" | relURL }}" alt="" width="660" height="778">
         <img class="pl-wukong pl-img-b" src="{{ "img/loader-arrive.jpg" | relURL }}" alt="" width="660" height="778" aria-hidden="true">
       </div>
-      <div class="pl-name-wrap">
-        <div class="pl-name">{{ site.Params.label.text | default site.Title }}</div>
-        {{- with site.Params.tobpage.sealText }}<span class="site-seal seal-loader" aria-hidden="true">{{ substr . 0 2 }}<br>{{ substr . 2 }}</span>{{ end }}
-      </div>
+      {{- with site.Params.tobpage.titleImage }}
+      <div class="pl-title-imgwrap"><img class="pl-title-img" src="{{ . | relURL }}" alt="" width="1095" height="411"></div>
+      {{- else }}
+      <div class="pl-name">{{ site.Params.label.text | default site.Title }}</div>
+      {{- end }}
       {{- with site.Params.tobpage.heroMotto }}
       <div class="pl-motto">{{ . }}</div>
       {{- end }}
