@@ -31,8 +31,17 @@
   <meta property="og:description" content="{{ .Description | default site.Params.description }}">
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
   <meta property="og:url" content="{{ .Permalink }}">
-  {{- with site.Params.assets.favicon }}
-  <link rel="icon" href="{{ . }}">
+  {{- $ogImg := .Params.cover.image | default site.Params.ogImage | default site.Params.heroImage | default "img/hero-wukong.jpg" }}
+  {{- if not (or (hasPrefix $ogImg "http://") (hasPrefix $ogImg "https://")) }}
+  {{- $ogImg = $ogImg | absURL }}
+  {{- end }}
+  <meta property="og:image" content="{{ $ogImg }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{{ $ogImg }}">
+  {{- if site.Params.assets.favicon }}
+  <link rel="icon" href="{{ site.Params.assets.favicon }}">
+  {{- else }}
+  <link rel="icon" href="{{ "favicon.svg" | relURL }}">
   {{- end }}
   {{- range .AlternativeOutputFormats }}
   {{- if eq .Rel "alternate" }}
