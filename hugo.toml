@@ -68,6 +68,13 @@ summaryLength = 80
     startDate = '2026-10-29'
     moeIcp = '萌ICP备20269123号'
     moeIcpURL = 'https://icp.gov.moe/?keyword=20269123'
+    # 评论（Giscus）：仓库 ID 与分类 ID 已备齐；把 giscus 应用装到本仓后将 enable 改为 true 即生效
+    [params.tobpage.giscus]
+      enable = false
+      repo = 'tobaye/tobaye.github.io'
+      repoId = 'R_kgDOVaRaiQ'
+      category = 'Announcements'
+      categoryId = 'DIC_kwDOVaRaic4DK9dv'
 
 [menu]
   [[menu.main]]
