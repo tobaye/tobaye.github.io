@@ -1,0 +1,35 @@
+{{- /* 系列文章导航：文章 front matter 写 series（系列名）即启用，series_order（序号）可选。
+       同系列 ≥2 篇才渲染；排序先 series_order 后日期，未写序号的按日期排在已编号之后。
+       纯文章参数驱动，零站点配置。 */ -}}
+{{- with .Params.series }}
+{{- $name := . }}
+{{- $current := $ }}
+{{- $items := slice }}
+{{- range site.RegularPages }}
+  {{- if eq .Params.series $name }}
+  {{- $items = $items | append (dict "page" . "order" (.Params.series_order | default 9999) "date" .Date) }}
+  {{- end }}
+{{- end }}
+{{- if ge (len $items) 2 }}
+{{- $items = sort (sort $items "date") "order" }}
+{{- $pos := 0 }}
+{{- range $i, $it := $items }}{{ if eq $it.page.RelPermalink $current.RelPermalink }}{{ $pos = add $i 1 }}{{ end }}{{ end }}
+<nav class="series-box" aria-label="系列文章导航">
+  <div class="series-head">
+    <span class="series-badge">系列</span>
+    <span class="series-name">{{ $name }}</span>
+    <span class="series-pos">本系列第 {{ $pos }} / {{ len $items }} 篇</span>
+  </div>
+  <ol class="series-list">
+    {{- range $items }}
+    {{- $p := .page }}
+    {{- if eq $p.RelPermalink $current.RelPermalink }}
+    <li class="is-current"><span class="series-item-title">{{ $p.Title }}</span><span class="series-here">本篇</span></li>
+    {{- else }}
+    <li><a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a></li>
+    {{- end }}
+    {{- end }}
+  </ol>
+</nav>
+{{- end }}
+{{- end }}

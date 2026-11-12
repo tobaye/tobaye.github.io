@@ -63,7 +63,7 @@
   {{- /* 未登记进分类体系的分类（如旧分类残留）单列一组，不藏匿 */ -}}
   {{- $extra := slice -}}
   {{- range .Pages -}}
-    {{- if not (index $meta.cats .Title) -}}{{- $extra = append $extra . -}}{{- end -}}
+    {{- if not (index $meta.cats .Title) -}}{{- $extra = $extra | append . -}}{{- end -}}
   {{- end -}}
   {{- with $extra }}
   <section class="cat-group" id="g-其他">

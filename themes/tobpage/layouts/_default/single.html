@@ -17,8 +17,11 @@
     {{- $wc := strings.RuneCount (replaceRE `\s+` "" .Plain) }}
     {{- $rt := div (add $wc 299) 300 }}
     <div class="post-meta">
+      {{- if not .Date.IsZero }}
       <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (site.Params.DateFormat | default "2006年1月2日") }}</time>
-      <span class="meta-sep">·</span><span>全文 {{ $wc }} 字</span>
+      <span class="meta-sep">·</span>
+      {{- end }}
+      <span>全文 {{ $wc }} 字</span>
       <span class="meta-sep">·</span><span>约 {{ $rt }} 分钟读完</span>
       {{- with .Params.categories }}
       <span class="meta-sep">·</span>
@@ -26,11 +29,18 @@
       {{- end }}
     </div>
 
-    {{- with .Params.cover.image }}
+    {{- $cover := .Params.cover }}
+    {{- if and $cover (reflect.IsMap $cover) $cover.image }}
+    {{- $coverSrc := $cover.image }}
+    {{- if not (or (hasPrefix $coverSrc "http://") (hasPrefix $coverSrc "https://") (hasPrefix $coverSrc "/")) }}
+    {{- with .Resources.GetMatch $coverSrc }}{{ $coverSrc = .RelPermalink }}{{ end }}
+    {{- end }}
     <figure class="post-cover">
-      <img src="{{ . }}" alt="{{ $.Params.cover.alt | default $.Title }}">
+      <img src="{{ $coverSrc }}" alt="{{ $cover.alt | default $.Title }}">
     </figure>
     {{- end }}
+
+    {{ partial "series-nav.html" . }}
 
     <div class="post-content">
       {{ .Content }}
@@ -54,6 +64,8 @@
       {{- end }}
     </nav>
     {{- end }}
+
+    {{ partial "related-posts.html" . }}
   </article>
   {{ partial "sidebar.html" . }}
 </div>

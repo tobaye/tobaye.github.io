@@ -1,0 +1,13 @@
+{{- /* 相关文章：Hugo Related Content，用 Hugo 内置默认索引（keywords 100 / tags 80 / date 10，阈值 80）；
+       站点可在 hugo.toml 写 [related] 覆盖（如 includeNewer = true 让最新文章也能出相关）。无结果时整段不渲染。 */ -}}
+{{- $related := site.RegularPages.Related . | first 4 }}
+{{- with $related }}
+<section class="related-posts" aria-label="相关文章">
+  <h2 class="related-title">相关文章</h2>
+  <div class="related-list">
+    {{- range . }}
+    {{ partial "post-card.html" . }}
+    {{- end }}
+  </div>
+</section>
+{{- end }}

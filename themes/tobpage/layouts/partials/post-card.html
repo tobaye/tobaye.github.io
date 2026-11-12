@@ -1,7 +1,13 @@
 <article class="post-card">
-  {{- with .Params.cover.image }}
+  {{- $cover := .Params.cover }}
+  {{- if and $cover (reflect.IsMap $cover) $cover.image }}
+  {{- /* 页面包相对路径的封面按页面资源解析（与 og:image 同口径），否则卡片图在别的页面会拼错地址 404 */}}
+  {{- $src := $cover.image }}
+  {{- if not (or (hasPrefix $src "http://") (hasPrefix $src "https://") (hasPrefix $src "/")) }}
+  {{- with .Resources.GetMatch $src }}{{ $src = .RelPermalink }}{{ end }}
+  {{- end }}
   <a class="post-card-cover" href="{{ $.RelPermalink }}" aria-hidden="true" tabindex="-1">
-    <img src="{{ . }}" alt="{{ $.Params.cover.alt | default $.Title }}" loading="lazy">
+    <img src="{{ $src }}" alt="{{ $cover.alt | default $.Title }}" loading="lazy">
   </a>
   {{- end }}
   <div class="post-card-body">

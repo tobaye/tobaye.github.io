@@ -1,0 +1,8 @@
+{{- /* 折叠块：{{< details "标题" >}}内容{{< /details >}}
+       标题也可命名参 title="…"；加 open 属性默认展开。内容按 Markdown 渲染（模板内 markdownify）。
+       基于原生 <details>，无 JS 也可开合。 */ -}}
+{{- $title := .Get "title" | default (.Get 0) | default "详情" }}
+<details class="tb-details"{{ if .Get "open" }} open{{ end }}>
+  <summary>{{ $title }}</summary>
+  <div class="tb-details-body">{{ .Inner | markdownify }}</div>
+</details>

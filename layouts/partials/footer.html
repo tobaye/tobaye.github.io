@@ -1,5 +1,5 @@
-{{- /* 【站点级覆盖】普客网专属，覆盖 Tobpage v1.1.1 的 layouts/partials/footer.html。
-     与主题原文件唯一的区别：</footer> 后多渲染 partial "site-beacon.html"（Cloudflare Web Analytics 信标，站点层功能）。
+{{- /* 【站点级覆盖】普客网专属，覆盖 Tobpage v1.2.0 的 layouts/partials/footer.html。
+     与主题原文件的区别：</footer> 后多渲染 partial "site-beacon.html"（Cloudflare Web Analytics 信标，站点层功能）。
      原因同 single.html 站点覆盖：带外部前置条件的功能只放站点层。主题升级 footer.html 时需同步本文件。 */ -}}
 <footer class="site-footer">
   <div class="footer-clouds" aria-hidden="true"></div>
@@ -11,14 +11,16 @@
       {{- end }}
       {{ partial "social-icons.html" . }}
     </div>
+    {{- with site.Menus.main }}
     <div class="footer-col">
       <div class="footer-title">导航</div>
       <ul class="footer-links">
-        {{- range site.Menus.main }}
+        {{- range . }}
         <li><a href="{{ .URL }}">{{ .Name }}</a></li>
         {{- end }}
       </ul>
     </div>
+    {{- end }}
     <div class="footer-col">
       <div class="footer-title">小站数据</div>
       <ul class="footer-stats">
@@ -41,4 +43,5 @@
     {{- end }}
   </div>
 </footer>
+
 {{ partial "site-beacon.html" . }}

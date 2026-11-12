@@ -1,5 +1,11 @@
 {{ define "main" }}
-{{- $heroImg := site.Params.heroImage | default ("img/hero-wukong.jpg" | relURL) }}
+{{- /* heroImage 相对路径须先 relURL：CSS 变量里的相对 url 会按样式表路径解析导致 404（与 og 链的 absURL 口径对齐到站点根） */}}
+{{- $heroImg := site.Params.heroImage }}
+{{- if $heroImg }}
+{{- if not (or (hasPrefix $heroImg "http://") (hasPrefix $heroImg "https://") (hasPrefix $heroImg "/")) }}{{ $heroImg = $heroImg | relURL }}{{ end }}
+{{- else }}
+{{- $heroImg = "img/hero-wukong.jpg" | relURL }}
+{{- end }}
 <section class="hero" style="--hero-img: url('{{ $heroImg }}')">
   <div class="hero-shade"></div>
   <div class="hero-content">

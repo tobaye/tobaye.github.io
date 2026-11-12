@@ -29,6 +29,24 @@
     </section>
     {{- end }}
     {{- end }}
+    {{- /* 无日期文章单独成组列出，不静默吞掉 */ -}}
+    {{- range $pages.GroupByPublishDate "2006" }}
+    {{- if eq .Key "0001" }}
+    <section class="timeline-year">
+      <h2 class="timeline-year-title">未注明日期<span class="timeline-count">{{ len .Pages }} 篇</span></h2>
+      <div class="timeline-month">
+        <ul class="timeline-list">
+          {{- range .Pages }}
+          <li>
+            <time datetime="">—</time>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </li>
+          {{- end }}
+        </ul>
+      </div>
+    </section>
+    {{- end }}
+    {{- end }}
   </div>
 </div>
 {{ end }}

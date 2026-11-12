@@ -1,0 +1,7 @@
+{{- /* 单个标签面板：{{< tab "标签名" >}}内容{{< /tab >}}，标签名也可命名参 title="…"。
+       只在 tabs 容器内使用；正文按 Markdown 渲染（markdownify）。 */ -}}
+{{- $title := .Get "title" | default (.Get 0) | default "标签" }}
+<div class="tb-tab-panel" data-tab-title="{{ $title }}">
+  <div class="tb-tab-panel-title">{{ $title }}</div>
+  {{ .Inner | markdownify }}
+</div>

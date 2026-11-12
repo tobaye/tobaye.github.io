@@ -25,15 +25,23 @@
     })();
     {{- end }}
   </script>
-  <title>{{ if .IsHome }}{{ site.Title }} · {{ site.Params.description }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+  <title>{{ if .IsHome }}{{ site.Title }}{{ with site.Params.description }} · {{ . }}{{ end }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
   <meta name="description" content="{{ .Description | default site.Params.description }}">
   <meta property="og:title" content="{{ .Title | default site.Title }}">
   <meta property="og:description" content="{{ .Description | default site.Params.description }}">
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
   <meta property="og:url" content="{{ .Permalink }}">
-  {{- $ogImg := .Params.cover.image | default site.Params.ogImage | default site.Params.heroImage | default "img/hero-wukong.jpg" }}
+  {{- /* cover 只认 map 形式：字符串 cover 不取值，避免一篇写法异形的文章拖垮全站构建；
+         cover 为页面包相对路径（如 "pic.jpg"）时先按页面资源解析，取不到再回退 absURL */}}
+  {{- $coverImg := "" }}
+  {{- with .Params.cover }}{{ if reflect.IsMap . }}{{ $coverImg = .image }}{{ end }}{{ end }}
+  {{- $ogImg := $coverImg | default site.Params.ogImage | default site.Params.heroImage | default "img/hero-wukong.jpg" }}
   {{- if not (or (hasPrefix $ogImg "http://") (hasPrefix $ogImg "https://")) }}
+  {{- if and $coverImg (eq $ogImg $coverImg) (not (hasPrefix $ogImg "/")) }}
+  {{- with .Resources.GetMatch $ogImg }}{{ $ogImg = .Permalink }}{{ else }}{{ $ogImg = $ogImg | absURL }}{{ end }}
+  {{- else }}
   {{- $ogImg = $ogImg | absURL }}
+  {{- end }}
   {{- end }}
   <meta property="og:image" content="{{ $ogImg }}">
   <meta name="twitter:card" content="summary_large_image">

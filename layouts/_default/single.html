@@ -1,5 +1,5 @@
-{{- /* 【站点级覆盖】普客网专属，覆盖 Tobpage v1.1.1 的 layouts/_default/single.html。
-     与主题原文件唯一的区别：文末在 </article> 前多渲染 partial "site-comments.html"（Giscus 评论，站点层功能）。
+{{- /* 【站点级覆盖】普客网专属，覆盖 Tobpage v1.2.0 的 layouts/_default/single.html。
+     与主题原文件的区别：文末在 </article> 前多渲染 partial "site-comments.html"（Giscus 评论，站点层功能）。
      原因：带外部前置条件的功能只放站点层，主题保持零前置。主题升级 single.html 时需同步本文件。 */ -}}
 {{ define "main" }}
 <div class="container layout-2col">
@@ -20,8 +20,11 @@
     {{- $wc := strings.RuneCount (replaceRE `\s+` "" .Plain) }}
     {{- $rt := div (add $wc 299) 300 }}
     <div class="post-meta">
+      {{- if not .Date.IsZero }}
       <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (site.Params.DateFormat | default "2006年1月2日") }}</time>
-      <span class="meta-sep">·</span><span>全文 {{ $wc }} 字</span>
+      <span class="meta-sep">·</span>
+      {{- end }}
+      <span>全文 {{ $wc }} 字</span>
       <span class="meta-sep">·</span><span>约 {{ $rt }} 分钟读完</span>
       {{- with .Params.categories }}
       <span class="meta-sep">·</span>
@@ -29,11 +32,18 @@
       {{- end }}
     </div>
 
-    {{- with .Params.cover.image }}
+    {{- $cover := .Params.cover }}
+    {{- if and $cover (reflect.IsMap $cover) $cover.image }}
+    {{- $coverSrc := $cover.image }}
+    {{- if not (or (hasPrefix $coverSrc "http://") (hasPrefix $coverSrc "https://") (hasPrefix $coverSrc "/")) }}
+    {{- with .Resources.GetMatch $coverSrc }}{{ $coverSrc = .RelPermalink }}{{ end }}
+    {{- end }}
     <figure class="post-cover">
-      <img src="{{ . }}" alt="{{ $.Params.cover.alt | default $.Title }}">
+      <img src="{{ $coverSrc }}" alt="{{ $cover.alt | default $.Title }}">
     </figure>
     {{- end }}
+
+    {{ partial "series-nav.html" . }}
 
     <div class="post-content">
       {{ .Content }}
@@ -57,6 +67,9 @@
       {{- end }}
     </nav>
     {{- end }}
+
+    {{ partial "related-posts.html" . }}
+
     {{ partial "site-comments.html" . }}
   </article>
   {{ partial "sidebar.html" . }}

@@ -136,12 +136,133 @@
     spy();
   }
 
-  /* ---------- 正文图片点击看大图（新窗口打开原图，沿用现站习惯） ---------- */
+  /* ---------- 代码块一键复制 ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll('.post-content pre'), function (pre) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy-btn';
+    btn.textContent = '复制';
+    btn.setAttribute('aria-label', '复制代码');
+    btn.addEventListener('click', function () {
+      var code = pre.querySelector('code');
+      var text = (code || pre).innerText || '';
+      var done = function () {
+        btn.textContent = '已复制';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = '复制'; btn.classList.remove('copied'); }, 1600);
+      };
+      var fallback = function () {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (err) {}
+        document.body.removeChild(ta);
+        done();
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else {
+        fallback();
+      }
+    });
+    pre.appendChild(btn);
+  });
+
+  /* ---------- 正文图片灯箱（点击放大、上一篇/下一篇式翻看；真外链图片不拦截） ---------- */
+  var lb = null, lbImgs = [], lbIdx = 0;
+  function lbBuild() {
+    lb = document.createElement('div');
+    lb.className = 'lightbox';
+    lb.hidden = true;
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.setAttribute('aria-label', '图片查看');
+    lb.innerHTML =
+      '<button type="button" class="lb-btn lb-close" aria-label="关闭">×</button>' +
+      '<button type="button" class="lb-btn lb-prev" aria-label="上一张">‹</button>' +
+      '<img class="lb-img" alt="">' +
+      '<button type="button" class="lb-btn lb-next" aria-label="下一张">›</button>' +
+      '<div class="lb-bar"><span class="lb-caption"></span><span class="lb-count"></span></div>';
+    document.body.appendChild(lb);
+    lb.querySelector('.lb-close').addEventListener('click', lbClose);
+    lb.querySelector('.lb-prev').addEventListener('click', function () { lbShow(lbIdx - 1); });
+    lb.querySelector('.lb-next').addEventListener('click', function () { lbShow(lbIdx + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) lbClose(); });
+  }
+  function lbShow(i) {
+    if (!lbImgs.length) return;
+    lbIdx = ((i % lbImgs.length) + lbImgs.length) % lbImgs.length;
+    var im = lbImgs[lbIdx];
+    var stage = lb.querySelector('.lb-img');
+    stage.src = im.currentSrc || im.src;
+    stage.alt = im.alt || '';
+    lb.querySelector('.lb-caption').textContent = im.alt || '';
+    var multi = lbImgs.length > 1;
+    lb.querySelector('.lb-count').textContent = multi ? (lbIdx + 1) + ' / ' + lbImgs.length : '';
+    lb.querySelector('.lb-prev').style.display = multi ? '' : 'none';
+    lb.querySelector('.lb-next').style.display = multi ? '' : 'none';
+  }
+  function lbOpen(img) {
+    if (!lb) lbBuild();
+    var box = img.closest('.post-content');
+    if (!box) return;
+    lbImgs = Array.prototype.slice.call(box.querySelectorAll('img'));
+    if (!lbImgs.length) return;
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    lbShow(lbImgs.indexOf(img));
+    document.addEventListener('keydown', lbKeys);
+  }
+  function lbClose() {
+    if (!lb || lb.hidden) return;
+    lb.hidden = true;
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', lbKeys);
+  }
+  function lbKeys(e) {
+    if (e.key === 'Escape') lbClose();
+    else if (e.key === 'ArrowLeft') lbShow(lbIdx - 1);
+    else if (e.key === 'ArrowRight') lbShow(lbIdx + 1);
+  }
   document.addEventListener('click', function (e) {
     var t = e.target;
-    if (t && t.tagName === 'IMG' && t.closest && t.closest('.post-content')) {
-      window.open(t.currentSrc || t.src, '_blank');
+    if (!t || t.tagName !== 'IMG' || !t.closest || !t.closest('.post-content')) return;
+    var link = t.closest('a');
+    if (link && link.href !== (t.currentSrc || t.src)) return; /* 包着真链接的图片：放行跳转，不开灯箱 */
+    e.preventDefault();
+    lbOpen(t);
+  });
+
+  /* ---------- 标签页（shortcode .tb-tabs）：把平铺面板收成选项卡 ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll('.tb-tabs'), function (box) {
+    var panels = Array.prototype.slice.call(box.querySelectorAll(':scope > .tb-tab-panel'));
+    if (!panels.length) return;
+    var bar = document.createElement('div');
+    bar.className = 'tb-tab-bar';
+    bar.setAttribute('role', 'tablist');
+    panels.forEach(function (panel, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tb-tab-btn';
+      b.setAttribute('role', 'tab');
+      b.textContent = panel.getAttribute('data-tab-title') || ('标签 ' + (i + 1));
+      b.addEventListener('click', function () { activate(i); });
+      bar.appendChild(b);
+    });
+    box.insertBefore(bar, panels[0]);
+    box.classList.add('js-enabled');
+    function activate(i) {
+      panels.forEach(function (p, j) { p.classList.toggle('active', j === i); });
+      Array.prototype.forEach.call(bar.children, function (b, j) {
+        b.classList.toggle('active', j === i);
+        b.setAttribute('aria-selected', j === i ? 'true' : 'false');
+      });
     }
+    activate(0);
   });
 
   /* ---------- 本地搜索（/search/ 页：拉取 /index.json 全量索引，前端过滤） ---------- */

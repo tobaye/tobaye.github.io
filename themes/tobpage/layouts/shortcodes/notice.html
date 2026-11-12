@@ -1,0 +1,10 @@
+{{- /* 提示框：{{< notice note >}}内容{{< /notice >}}
+       类型三选一：note（注）/ tip（提示）/ warn（警告）；也可命名参 {{< notice type="warn" >}}。
+       框内内容按 Markdown 渲染（模板内 markdownify，不依赖站点 goldmark unsafe 设置）。 */ -}}
+{{- $type := .Get "type" | default (.Get 0) | default "note" }}
+{{- if not (in (slice "note" "tip" "warn") $type) }}{{ $type = "note" }}{{ end }}
+{{- $labels := dict "note" "注" "tip" "提示" "warn" "警告" }}
+<div class="tb-notice tb-notice-{{ $type }}" role="note">
+  <span class="tb-notice-label">{{ index $labels $type }}</span>
+  <div class="tb-notice-body">{{ .Inner | markdownify }}</div>
+</div>

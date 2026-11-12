@@ -8,14 +8,16 @@
       {{- end }}
       {{ partial "social-icons.html" . }}
     </div>
+    {{- with site.Menus.main }}
     <div class="footer-col">
       <div class="footer-title">导航</div>
       <ul class="footer-links">
-        {{- range site.Menus.main }}
+        {{- range . }}
         <li><a href="{{ .URL }}">{{ .Name }}</a></li>
         {{- end }}
       </ul>
     </div>
+    {{- end }}
     <div class="footer-col">
       <div class="footer-title">小站数据</div>
       <ul class="footer-stats">

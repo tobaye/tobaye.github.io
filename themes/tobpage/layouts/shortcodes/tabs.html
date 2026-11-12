@@ -1,0 +1,6 @@
+{{- /* 标签页容器：与 tab 子 shortcode 配套——
+       {{< tabs >}}{{< tab "其一" >}}…{{< /tab >}}{{< tab "其二" >}}…{{< /tab >}}{{< /tabs >}}
+       tobpage.js 把平铺面板收成选项卡；无 JS 时面板依次平铺、各自带标题，不丢内容。 */ -}}
+<div class="tb-tabs">
+{{ .Inner }}
+</div>
