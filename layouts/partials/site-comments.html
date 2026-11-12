@@ -1,0 +1,33 @@
+{{- /* 站点层评论区（Giscus）——普客网专属，不属于 Tobpage 主题。
+     仅当 params.tobpage.giscus.enable=true 且 repo/repoId/category/categoryId 四项齐全时渲染。
+     评论数据存于本站仓库的 GitHub Discussions；前置条件：仓库已开启 Discussions 并安装 giscus 应用。
+     样式在本文件内自带（<style>），不依赖主题 CSS。 */ -}}
+{{- with site.Params.tobpage.giscus }}
+{{- if and .enable .repo .repoId .category .categoryId }}
+<section class="post-comments">
+  <h2 class="post-comments-title">评论</h2>
+  <style>
+    .post-comments { margin-top: 34px; }
+    .post-comments-title {
+      font-family: var(--font-title); font-size: 20px; color: var(--text);
+      margin: 0 0 16px; padding-top: 26px; border-top: 1px solid var(--border-soft);
+    }
+  </style>
+  <script src="https://giscus.app/client.js"
+    data-repo="{{ .repo }}"
+    data-repo-id="{{ .repoId }}"
+    data-category="{{ .category }}"
+    data-category-id="{{ .categoryId }}"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin="anonymous"
+    async>
+  </script>
+</section>
+{{- end }}
+{{- end }}

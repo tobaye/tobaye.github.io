@@ -1,0 +1,6 @@
+{{- /* 站点层 Cloudflare Web Analytics 信标——普客网专属，不属于 Tobpage 主题。
+     仅当 params.tobpage.cfBeaconToken 非空时输出官方 beacon 脚本（无 Cookie 统计）；未配令牌则零输出。
+     令牌来源：Cloudflare 控制台 → Web Analytics → 添加站点 puke.eu.org。 */ -}}
+{{- with site.Params.tobpage.cfBeaconToken }}
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ . }}"}'></script>
+{{- end }}

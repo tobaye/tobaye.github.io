@@ -336,11 +336,6 @@ h1, h2, h3, h4 { font-family: var(--font-title); color: var(--text-strong); line
 .post-nav-link strong { font-family: var(--font-title); font-size: 15.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .post-nav-link.next { text-align: right; }
 .post-nav-link:hover { border-color: var(--gold); color: var(--gold-bright); }
-.post-comments { margin-top: 34px; }
-.post-comments-title {
-  font-family: var(--font-title); font-size: 20px; color: var(--text);
-  margin: 0 0 16px; padding-top: 26px; border-top: 1px solid var(--border-soft);
-}
 
 /* ---------- 列表头 / 分类标签页 ---------- */
 .list-header { padding: 6px 2px 2px; }
