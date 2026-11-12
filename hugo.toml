@@ -73,7 +73,7 @@ summaryLength = 80
     cfBeaconToken = '1198ae69400a4cf6941f8c6d9a3d50c8'
     # 评论（Giscus，站点层功能）：仓库 ID 与分类 ID 已备齐；把 giscus 应用装到本仓后将 enable 改为 true 即生效（经 layouts/partials/site-comments.html 输出，主题无关）
     [params.tobpage.giscus]
-      enable = false
+      enable = true
       repo = 'tobaye/tobaye.github.io'
       repoId = 'R_kgDOVaRaiQ'
       category = 'Announcements'
