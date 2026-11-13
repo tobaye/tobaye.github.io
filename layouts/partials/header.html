@@ -1,5 +1,5 @@
 {{/*
-  【站点层覆盖】本文件为普客网站点对 Tobpage 主题 partials/header.html 的覆盖（与主题 v1.2.0 原件的唯一差异：在主导航「关于」之后增加「单词专区」一项，指向站内 /words/ 专区页）。
+  【站点层覆盖】本文件为普客网站点对 Tobpage 主题 partials/header.html 的覆盖（与主题 v1.2.0 原件的唯一差异：在主导航「关于」之后增加「单词专区」一项，直达词光应用 https://words.puke.eu.org）。
   主题升级时须以新主题原件重新套用此改动，勿直接覆盖丢失。
 */}}
 {{- $meta := partial "category-meta.html" . -}}
@@ -57,7 +57,7 @@
           <a class="nav-link{{ if eq .RelPermalink ("about/" | relURL) }} active{{ end }}" href="{{ "about/" | relURL }}">{{ partial "icon.html" (dict "name" "user" "size" 16 "color" "#c9a24b") }}<span>关于</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link{{ if eq .RelPermalink ("words/" | relURL) }} active{{ end }}" href="{{ "words/" | relURL }}">{{ partial "icon.html" (dict "name" "book-open" "size" 16 "color" "#c9a24b") }}<span>单词专区</span></a>
+          <a class="nav-link" href="https://words.puke.eu.org">{{ partial "icon.html" (dict "name" "book-open" "size" 16 "color" "#c9a24b") }}<span>单词专区</span></a>
         </li>
       </ul>
       <div class="nav-actions">
