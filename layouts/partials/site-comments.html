@@ -49,6 +49,7 @@
       <form id="pc-login-form">
         <input id="pc-login-u" autocomplete="username" placeholder="账号">
         <input id="pc-login-p" type="password" autocomplete="current-password" placeholder="密码">
+        <div><span id="pc-login-cq">验证码加载中…</span> <input id="pc-login-ca" placeholder="验证码答案" autocomplete="off"></div>
         <button type="submit" class="pc-primary">登录</button>
       </form>
       <form id="pc-reg-form" hidden>
@@ -56,6 +57,7 @@
         <input id="pc-reg-u" autocomplete="username" placeholder="账号（3–24 位字母/数字/_/-）">
         <input id="pc-reg-name" placeholder="显示名（如：阿明）">
         <input id="pc-reg-p" type="password" autocomplete="new-password" placeholder="密码（至少 8 位）">
+        <input id="pc-reg-p2" type="password" autocomplete="new-password" placeholder="再输一遍密码">
         <button type="submit" class="pc-primary">注册并登录</button>
       </form>
     </div>
@@ -120,14 +122,22 @@
     $('pc-login-form').hidden = true; $('pc-reg-form').hidden = false;
     $('pc-tab-reg').className = 'pc-on'; $('pc-tab-login').className = ''; msg('');
   };
+  var capToken = '';
+  async function loadCaptcha() {
+    var r = await api('/api/captcha');
+    if (r.data && r.data.question) { $('pc-login-cq').textContent = r.data.question; capToken = r.data.token; }
+  }
+  loadCaptcha();
   $('pc-login-form').onsubmit = async function (e) {
     e.preventDefault(); msg('登录中…');
-    var r = await api('/api/login', { method: 'POST', body: { username: $('pc-login-u').value.trim(), password: $('pc-login-p').value } });
+    var r = await api('/api/login', { method: 'POST', body: { username: $('pc-login-u').value.trim(), password: $('pc-login-p').value, captcha_token: capToken, captcha_answer: $('pc-login-ca').value.trim() } });
     if (r.data.token) { setToken(r.data.token); msg('登录成功'); refreshAuth(); }
-    else msg(r.data.error || '登录失败', true);
+    else { msg(r.data.error || '登录失败', true); $('pc-login-ca').value = ''; loadCaptcha(); }
   };
   $('pc-reg-form').onsubmit = async function (e) {
-    e.preventDefault(); msg('注册中…');
+    e.preventDefault();
+    if ($('pc-reg-p').value !== $('pc-reg-p2').value) { msg('两次输入的密码不一致', true); return; }
+    msg('注册中…');
     var r = await api('/api/register', { method: 'POST', body: {
       invite_code: $('pc-reg-code').value.trim(), username: $('pc-reg-u').value.trim(),
       display_name: $('pc-reg-name').value.trim(), password: $('pc-reg-p').value } });
