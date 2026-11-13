@@ -103,7 +103,7 @@ summaryLength = 80
   [[menu.main]]
     identifier = 'words'
     name = '单词专区'
-    url = '/words/'
+    url = 'https://words.puke.eu.org'
     weight = 25
   [[menu.main]]
     identifier = 'archives'
