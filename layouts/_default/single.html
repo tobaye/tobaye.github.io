@@ -1,5 +1,5 @@
 {{- /* 【站点级覆盖】普客网专属，覆盖 Tobpage v1.2.0 的 layouts/_default/single.html。
-     与主题原文件的区别：文末在 </article> 前多渲染 partial "site-comments.html"（Giscus 评论，站点层功能）。
+     与主题原文件的区别：文末在 </article> 前多渲染 partial "site-comments.html"（自建评论网关，站点层功能；旧 Giscus 版存于 partials/site-comments-giscus.OLD）。
      原因：带外部前置条件的功能只放站点层，主题保持零前置。主题升级 single.html 时需同步本文件。 */ -}}
 {{ define "main" }}
 <div class="container layout-2col">
