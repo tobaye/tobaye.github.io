@@ -124,9 +124,13 @@
   };
   var capToken = '';
   async function loadCaptcha() {
-    var r = await api('/api/captcha');
-    if (r.data && r.data.question) { $('pc-login-cq').textContent = r.data.question; capToken = r.data.token; }
+    try {
+      var r = await api('/api/captcha');
+      if (r.data && r.data.question) { $('pc-login-cq').textContent = r.data.question; capToken = r.data.token; return; }
+      throw new Error('bad');
+    } catch (e) { $('pc-login-cq').textContent = '验证码加载失败，点此重试'; }
   }
+  $('pc-login-cq').onclick = function () { $('pc-login-cq').textContent = '验证码加载中…'; loadCaptcha(); };
   loadCaptcha();
   $('pc-login-form').onsubmit = async function (e) {
     e.preventDefault(); msg('登录中…');
