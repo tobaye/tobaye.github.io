@@ -101,6 +101,11 @@ summaryLength = 80
     url = '/tags/'
     weight = 20
   [[menu.main]]
+    identifier = 'words'
+    name = '单词专区'
+    url = '/words/'
+    weight = 25
+  [[menu.main]]
     identifier = 'archives'
     name = '归档'
     url = '/archives/'
