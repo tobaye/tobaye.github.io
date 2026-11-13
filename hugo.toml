@@ -102,7 +102,7 @@ summaryLength = 80
     weight = 20
   [[menu.main]]
     identifier = 'words'
-    name = '单词专区'
+    name = '词光'
     url = 'https://words.puke.eu.org'
     weight = 25
   [[menu.main]]
