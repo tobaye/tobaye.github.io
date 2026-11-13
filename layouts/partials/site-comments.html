@@ -1,10 +1,11 @@
-{{- /* 站点层评论区（Giscus）——普客网专属，不属于 Tobpage 主题。
-     仅当 params.tobpage.giscus.enable=true 且 repo/repoId/category/categoryId 四项齐全时渲染。
-     评论数据存于本站仓库的 GitHub Discussions；前置条件：仓库已开启 Discussions 并安装 giscus 应用。
-     样式在本文件内自带（<style>），不依赖主题 CSS。 */ -}}
-{{- with site.Params.tobpage.giscus }}
-{{- if and .enable .repo .repoId .category .categoryId }}
-<section class="post-comments">
+{{- /* 站点层评论区（自建评论网关）——普客网专属，不属于 Tobpage 主题。
+     访客用站内账号（邀请制注册）评论，评论先审后发，内容最终存本站仓库 GitHub Discussions。
+     网关 Worker：puke-comments（Cloudflare），接口基址可用 params.tobpage.commentsApi 覆盖。
+     旧 Giscus 版保存在同目录 site-comments-giscus.OLD，回滚时改名覆盖本文件即可。
+     样式与脚本均在本文件内自带，不依赖主题文件。 */ -}}
+{{- $api := site.Params.tobpage.commentsApi | default "https://puke-comments.tobaye-031.workers.dev" }}
+{{- $pagePath := strings.TrimPrefix "/" .RelPermalink }}
+<section class="post-comments" id="pc-comments" data-api="{{ $api }}" data-path="{{ $pagePath }}">
   <h2 class="post-comments-title">评论</h2>
   <style>
     .post-comments { margin-top: 34px; }
@@ -12,22 +13,138 @@
       font-family: var(--font-title); font-size: 20px; color: var(--text);
       margin: 0 0 16px; padding-top: 26px; border-top: 1px solid var(--border-soft);
     }
+    .pc-list { list-style: none; margin: 0 0 18px; padding: 0; }
+    .pc-item { padding: 12px 0; border-bottom: 1px solid var(--border-soft); }
+    .pc-meta { font-size: 13px; color: var(--text-soft, #888); margin-bottom: 4px; }
+    .pc-meta b { color: var(--text); }
+    .pc-body { white-space: pre-wrap; word-break: break-word; line-height: 1.7; }
+    .pc-empty, .pc-note { color: var(--text-soft, #888); font-size: 14px; }
+    .pc-box input, .pc-box textarea {
+      width: 100%; box-sizing: border-box; padding: 9px 10px; margin: 5px 0;
+      border: 1px solid var(--border-soft); border-radius: 8px;
+      background: var(--bg-soft, transparent); color: var(--text); font: inherit;
+    }
+    .pc-box textarea { min-height: 84px; resize: vertical; }
+    .pc-box button {
+      padding: 8px 18px; margin: 6px 6px 6px 0; border-radius: 8px; cursor: pointer;
+      border: 1px solid var(--border-soft); background: var(--bg-soft, transparent); color: var(--text); font: inherit;
+    }
+    .pc-box button.pc-primary { background: var(--accent, #c9a24b); border-color: transparent; color: #16130c; font-weight: 600; }
+    .pc-tabs button { opacity: .6; }
+    .pc-tabs button.pc-on { opacity: 1; font-weight: 600; }
+    .pc-msg { font-size: 14px; margin: 6px 0; }
+    .pc-msg.pc-err { color: #c8402a; }
+    .pc-admin-link { font-size: 12px; color: var(--text-soft, #888); }
   </style>
-  <script src="https://giscus.app/client.js"
-    data-repo="{{ .repo }}"
-    data-repo-id="{{ .repoId }}"
-    data-category="{{ .category }}"
-    data-category-id="{{ .categoryId }}"
-    data-mapping="pathname"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="bottom"
-    data-theme="preferred_color_scheme"
-    data-lang="zh-CN"
-    crossorigin="anonymous"
-    async>
-  </script>
+
+  <ul class="pc-list" id="pc-list"></ul>
+  <p class="pc-empty" id="pc-empty" hidden>还没有评论，来留第一条吧。</p>
+
+  <div class="pc-box" id="pc-box">
+    <div id="pc-auth">
+      <div class="pc-tabs">
+        <button type="button" id="pc-tab-login" class="pc-on">登录</button>
+        <button type="button" id="pc-tab-reg">注册（需邀请码）</button>
+      </div>
+      <form id="pc-login-form">
+        <input id="pc-login-u" autocomplete="username" placeholder="账号">
+        <input id="pc-login-p" type="password" autocomplete="current-password" placeholder="密码">
+        <button type="submit" class="pc-primary">登录</button>
+      </form>
+      <form id="pc-reg-form" hidden>
+        <input id="pc-reg-code" placeholder="邀请码" autocomplete="off">
+        <input id="pc-reg-u" autocomplete="username" placeholder="账号（3–24 位字母/数字/_/-）">
+        <input id="pc-reg-name" placeholder="显示名（如：阿明）">
+        <input id="pc-reg-p" type="password" autocomplete="new-password" placeholder="密码（至少 8 位）">
+        <button type="submit" class="pc-primary">注册并登录</button>
+      </form>
+    </div>
+
+    <form id="pc-form" hidden>
+      <p class="pc-note">以 <b id="pc-who"></b> 身份评论 <button type="button" id="pc-logout">退出</button></p>
+      <textarea id="pc-text" maxlength="2000" placeholder="写下你的评论……"></textarea>
+      <button type="submit" class="pc-primary">发表评论</button>
+      <span class="pc-note">评论经管理员审核后发布；每 24 小时可评论一次。</span>
+    </form>
+    <p class="pc-msg" id="pc-msg"></p>
+    <p><a class="pc-admin-link" href="{{ $api }}/admin" target="_blank" rel="noopener">评论管理台</a></p>
+  </div>
+
+<script>
+(function () {
+  var root = document.getElementById('pc-comments');
+  if (!root) return;
+  var API = root.dataset.api, PATH = root.dataset.path;
+  var $ = function (id) { return document.getElementById(id); };
+  var msg = function (t, isErr) { var m = $('pc-msg'); m.textContent = t || ''; m.className = 'pc-msg' + (isErr ? ' pc-err' : ''); };
+  function token() { try { return localStorage.getItem('pc_token') || ''; } catch (e) { return ''; } }
+  function setToken(t) { try { t ? localStorage.setItem('pc_token', t) : localStorage.removeItem('pc_token'); } catch (e) {} }
+  async function api(path, opts) {
+    opts = opts || {};
+    var headers = { 'Content-Type': 'application/json' };
+    var t = token(); if (t) headers['Authorization'] = 'Bearer ' + t;
+    var r = await fetch(API + path, { method: opts.method || 'GET', headers: headers, body: opts.body ? JSON.stringify(opts.body) : undefined });
+    var d = {}; try { d = await r.json(); } catch (e) {}
+    return { status: r.status, data: d };
+  }
+  function esc(s) { return String(s == null ? '' : s); }
+  async function loadList() {
+    var r = await api('/api/comments?path=' + encodeURIComponent(PATH));
+    var list = $('pc-list'); list.textContent = '';
+    var items = (r.data && r.data.comments) || [];
+    $('pc-empty').hidden = items.length > 0;
+    items.forEach(function (c) {
+      var li = document.createElement('li'); li.className = 'pc-item';
+      var meta = document.createElement('div'); meta.className = 'pc-meta';
+      var b = document.createElement('b'); b.textContent = esc(c.author_name);
+      meta.appendChild(b);
+      meta.appendChild(document.createTextNode('（@' + esc(c.author_username) + '）· ' + new Date(c.created_at).toLocaleString('zh-CN')));
+      var body = document.createElement('div'); body.className = 'pc-body'; body.textContent = esc(c.body);
+      li.appendChild(meta); li.appendChild(body); list.appendChild(li);
+    });
+  }
+  async function refreshAuth() {
+    var t = token();
+    if (!t) { $('pc-auth').hidden = false; $('pc-form').hidden = true; return; }
+    var r = await api('/api/me');
+    if (r.status === 200 && r.data.user) {
+      $('pc-auth').hidden = true; $('pc-form').hidden = false;
+      $('pc-who').textContent = r.data.user.display_name + '（@' + r.data.user.username + '）';
+    } else { setToken(''); $('pc-auth').hidden = false; $('pc-form').hidden = true; }
+  }
+  $('pc-tab-login').onclick = function () {
+    $('pc-login-form').hidden = false; $('pc-reg-form').hidden = true;
+    $('pc-tab-login').className = 'pc-on'; $('pc-tab-reg').className = ''; msg('');
+  };
+  $('pc-tab-reg').onclick = function () {
+    $('pc-login-form').hidden = true; $('pc-reg-form').hidden = false;
+    $('pc-tab-reg').className = 'pc-on'; $('pc-tab-login').className = ''; msg('');
+  };
+  $('pc-login-form').onsubmit = async function (e) {
+    e.preventDefault(); msg('登录中…');
+    var r = await api('/api/login', { method: 'POST', body: { username: $('pc-login-u').value.trim(), password: $('pc-login-p').value } });
+    if (r.data.token) { setToken(r.data.token); msg('登录成功'); refreshAuth(); }
+    else msg(r.data.error || '登录失败', true);
+  };
+  $('pc-reg-form').onsubmit = async function (e) {
+    e.preventDefault(); msg('注册中…');
+    var r = await api('/api/register', { method: 'POST', body: {
+      invite_code: $('pc-reg-code').value.trim(), username: $('pc-reg-u').value.trim(),
+      display_name: $('pc-reg-name').value.trim(), password: $('pc-reg-p').value } });
+    if (r.data.token) { setToken(r.data.token); msg('注册成功，已登录'); refreshAuth(); }
+    else msg(r.data.error || '注册失败', true);
+  };
+  $('pc-logout').onclick = async function () { await api('/api/logout', { method: 'POST' }); setToken(''); msg('已退出'); refreshAuth(); };
+  $('pc-form').onsubmit = async function (e) {
+    e.preventDefault();
+    var text = $('pc-text').value.trim();
+    if (!text) { msg('评论不能为空', true); return; }
+    msg('提交中…');
+    var r = await api('/api/comments', { method: 'POST', body: { path: PATH, body: text } });
+    if (r.data.ok) { $('pc-text').value = ''; msg(r.data.note || '已提交'); loadList(); }
+    else msg(r.data.error || '提交失败', true);
+  };
+  loadList(); refreshAuth();
+})();
+</script>
 </section>
-{{- end }}
-{{- end }}
