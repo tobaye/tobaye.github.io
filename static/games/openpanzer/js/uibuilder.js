@@ -22,24 +22,24 @@ UIBuilder.currencyIcon = "<img src='" + UIBuilder.eqImgPath + "currency.png'/>";
 //Build the class selection buttons "unitClass.id from equipment.js": [button name, description, ]
 UIBuilder.eqClassButtons =
 {
-	"9": ['but-aa', 'Air defence'], "4": ['but-at', 'Anti-tank'], "8": ['but-arty', 'Artillery'],
-	"1": ['but-inf', 'Infantry'], "3":['but-rcn', 'Recon'], "2": ['but-tank', 'Tank'],
-	"10": ['but-af', 'Air Fighter'], "11": ['but-ab', 'Air Bomber']
+	"9": ['but-aa', '防空'], "4": ['but-at', '反坦克'], "8": ['but-arty', '炮兵'],
+	"1": ['but-inf', '步兵'], "3":['but-rcn', '侦察'], "2": ['but-tank', '坦克'],
+	"10": ['but-af', '战斗机'], "11": ['but-ab', '轰炸机']
 };
 
 //Unit stats that will be listed on the window format <id>, <title>, <isSortKey>, <sortKeyName>
 UIBuilder.unitstats =
 [
-	["uFlag", "country flag", 0, null],["uCost", "Unit price", 1, "cost"], ["uStr", "Unit strength", 0, null],
-	["uFuel", "Unit fuel", 0, "fuel"], ["uAmmo", "Unit Ammo", 1, "ammo"], ["uGunRange", "Firing range", 1, "gunrange"],
-	["uMovement", "Movement range", 1, "movpoints"], ["uExp", "Combat Experience", 0, null],
-	["uEnt","Entrenchment", 0, null], ["uIni", "Combat initiative", 1, "initiative"],
-	["uSpot", "Spotting range", 1, "spotrange"], ["uAHard", "Power vs Hard targets", 1, "hardatk"],
-	["uASoft", "Power vs Soft targets", 1, "softatk"], ["uAAir", "Power vs Air targets", 1, "airatk"],
-	["uANaval", "Power vs Naval targets", 1, "navalatk"], ["uDHard", "Defence vs ground attacker", 1, "grounddef"],
-	["uDAir", "Defence vs air attacker", 1, "airdef"], ["uDClose", "Defence in close combat", 1, "closeddef"],
-	["uDRange", "Defence in ranged combat", 1, "rangedefmod"], ["uMoveType", "Movement type", 0, null],
-	["uTarget", "Target type", 0, null], ["uTransport", "See unit/transport", 0, null] /*, ["uClass", "Unit class", 0, null]*/
+	["uFlag", "国家旗帜", 0, null],["uCost", "单位价格", 1, "cost"], ["uStr", "单位兵力", 0, null],
+	["uFuel", "单位燃料", 0, "fuel"], ["uAmmo", "单位弹药", 1, "ammo"], ["uGunRange", "射程", 1, "gunrange"],
+	["uMovement", "移动范围", 1, "movpoints"], ["uExp", "战斗经验", 0, null],
+	["uEnt","工事", 0, null], ["uIni", "战斗先攻", 1, "initiative"],
+	["uSpot", "侦察范围", 1, "spotrange"], ["uAHard", "对硬目标火力", 1, "hardatk"],
+	["uASoft", "对软目标火力", 1, "softatk"], ["uAAir", "对空火力", 1, "airatk"],
+	["uANaval", "对海火力", 1, "navalatk"], ["uDHard", "对地面攻击防御", 1, "grounddef"],
+	["uDAir", "对空防御", 1, "airdef"], ["uDClose", "近战防御", 1, "closeddef"],
+	["uDRange", "远程防御", 1, "rangedefmod"], ["uMoveType", "移动类型", 0, null],
+	["uTarget", "目标类型", 0, null], ["uTransport", "查看单位/运输工具", 0, null] /*, ["uClass", "Unit class", 0, null]*/
 ];
 
 
@@ -47,12 +47,12 @@ UIBuilder.unitstats =
 UIBuilder.buildStartMenu = function()
 {
 	//menu buttons divs with id, title the image filename from resources/ui/startmenu/images
-	var menubuttons = [["newcampaign", "New Campaign"], ["newscenario", "New Scenario"], ["settings", "Settings"],
-			   ["help", "Help"], ["continuegame", "Continue Game"]];
+	var menubuttons = [["newcampaign", "新战役"], ["newscenario", "新剧本"], ["settings", "设置"],
+			   ["help", "帮助"], ["continuegame", "继续游戏"]];
 	//Settings with key in uiSettings and Title
-	var settings = [["showGridTerrain", "Show terrain with Hex Grid"],["muteUnitSounds", "Mute unit combat sounds"],
-			["useRetina", "Use Retina Resolution"], ["use3D", "Use 3D acceleration"], ["markFOW", "Show Fog Of War(TBD)"],
-			["markOwnUnits", "Mark own units on map"],	["markEnemyUnits", "Mark enemy units on map"]];
+	var settings = [["showGridTerrain", "六角网格下显示地形图标"],["muteUnitSounds", "静音单位战斗音效"],
+			["useRetina", "使用 Retina 分辨率"], ["use3D", "使用 3D 加速"], ["markFOW", "显示战争迷雾（待开发）"],
+			["markOwnUnits", "在地图上标记己方单位"],	["markEnemyUnits", "在地图上标记敌方单位"]];
 
 	var i, b, div, img;
 
@@ -71,7 +71,7 @@ UIBuilder.buildStartMenu = function()
 	if (menubuttons.length % 2)
 		div.className = "smMainButtonCenter"
 
-	$('smLogoText').innerHTML = "version " + VERSION;
+	$('smLogoText').innerHTML = "版本 " + VERSION;
 	$('smCredits').innerHTML = "Copyright 2012 <a href='http://linuxconsulting.ro/openpanzer'>Nicu Pavel</a>";
 
 	//Add new campaign options (campaign list, description)
@@ -86,9 +86,9 @@ UIBuilder.buildStartMenu = function()
 	{
 		var v = this.options[this.selectedIndex].value;
 		$('smCampDesc').innerHTML = campaignlist[v].desc;
-		$('smCampCountry').innerHTML = "<b>Country</b><br/>" + countryNames[campaignlist[v].flag];
-		$('smCampScenarios').innerHTML = "<b>Scenarios</b><br/>" + campaignlist[v].scenarios;
-		$('smCampPrestige').innerHTML = "<b>Start prestige</b><br/>" + campaignlist[v].prestige + "&nbsp;" + UIBuilder.currencyIcon;
+		$('smCampCountry').innerHTML = "<b>国家</b><br/>" + countryNames[campaignlist[v].flag];
+		$('smCampScenarios').innerHTML = "<b>剧本数</b><br/>" + campaignlist[v].scenarios;
+		$('smCampPrestige').innerHTML = "<b>初始声望</b><br/>" + campaignlist[v].prestige + "&nbsp;" + UIBuilder.currencyIcon;
 		
 		$('smCamp').selectedCampaign = v; //save index to campaign from campaignlist //TODO move to userSel
 	}
@@ -233,9 +233,9 @@ UIBuilder.buildMainMenu = function()
 {
 	//menu buttons divs with id the image filename from resources/ui/menu/images
 	//format is <id>, <title>, <0/1 if should be placed in slide div or not>
-	var menubuttons = [ ["inspectunit","Inspect Unit", 0], ["endturn","End Turn", 0],["mainmenu", "Main  Menu", 0],
-		["buy","Upgrade/Buy Units", 1],["hex","Toggle Hex Grid", 1], ["air","Toggle Air Mode On", 1],
-		["zoom","Strategic Map", 1], ["options","Options", 1]];
+	var menubuttons = [ ["inspectunit","查看单位", 0], ["endturn","结束回合", 0],["mainmenu", "主菜单", 0],
+		["buy","升级/购买单位", 1],["hex","切换六角网格", 1], ["air","切换空中模式", 1],
+		["zoom","战略地图", 1], ["options","选项", 1]];
 
 	for (var b = 0; b < menubuttons.length; b++)
 	{
@@ -285,7 +285,7 @@ UIBuilder.buildEquipmentWindow = function()
 	UIBuilder.setDefaultUserSelections();
 
 	//Top Sorting buttons
-	$('eqSortOrderBut').title = 'Click to change sorting order ascending/descenting';
+	$('eqSortOrderBut').title = '点击切换升序/降序';
 	$('eqSortOrderBut').onclick = function()
 		{
 			var order = $('eqUserSel').sortorder || 0;
@@ -298,7 +298,7 @@ UIBuilder.buildEquipmentWindow = function()
 	img.id = "sort-order";
 	img.src = UIBuilder.eqImgPath + "sort-order.png";
 
-	$('eqSortOptionsBut').title = 'Click to change sort category';
+	$('eqSortOptionsBut').title = '点击更改排序类别';
 	$('eqSortOptionsBut').onclick = function()
 		{
 			if (isVisible('eqSortOptions'))
@@ -340,20 +340,20 @@ UIBuilder.buildEquipmentWindow = function()
 	}
 
 	//Bottom buttons
-	$('eqSelCountry').title = 'Click to change country';
+	$('eqSelCountry').title = '点击切换国家';
 	$('eqSelCountry').onclick = function() { game.ui.equipmentWindowButtons('changecountry'); };
-	$('eqNewBut').title = "Buy unit as a new unit";
+	$('eqNewBut').title = "购买为新单位";
 	$('eqNewBut').onclick = function() { game.ui.equipmentWindowButtons('buy'); };
-	$('eqUpgradeBut').title = "Upgrade selected unit to this unit";
+	$('eqUpgradeBut').title = "将所选单位升级为该单位";
 	$('eqUpgradeBut').onclick = function() { game.ui.equipmentWindowButtons('upgrade'); };
-	$('eqCloseBut').title = "Close";
+	$('eqCloseBut').title = "关闭";
 	$('eqCloseBut').onclick = function() { makeHidden('equipment'); };
 }
 
 //Builds the sorting options on equipment
 UIBuilder.buildEquipmentSortOptions = function()
 {
-	$('eqSortInfo').innerHTML = "Sort equipment by: ";
+	$('eqSortInfo').innerHTML = "装备排序依据：";
 
 	for (var s = 0; s < UIBuilder.unitstats.length; s++)
 	{
@@ -369,10 +369,10 @@ UIBuilder.buildEquipmentSortOptions = function()
 		{
 			$('eqUserSel').sortproperty = this.sortproperty;
 			game.ui.updateEquipmentWindow($('eqUserSel').eqclass);
-			$('eqSortInfo').innerHTML = "Sorted by: " + this.title;
+			$('eqSortInfo').innerHTML = "排序：" + this.title;
 		};
 	}
-	$('eqSortCloseBut').title = "Close sorting options";
+	$('eqSortCloseBut').title = "关闭排序选项";
 	$('eqSortCloseBut').onclick = function() { makeHidden('eqSortOptions'); makeVisible('eqButtonsContainer'); };
 
 }
@@ -396,7 +396,7 @@ UIBuilder.showEquipmentCosts = function(prestige, buyCost, upCost)
 
 	if (buyCost > 0 && buyCost <= prestige)
 	{
-		$('eqNewText').innerHTML = "New unit cost: " + buyCost + UIBuilder.currencyIcon;
+		$('eqNewText').innerHTML = "新单位费用：" + buyCost + UIBuilder.currencyIcon;
 		$('eqNewBut').style.display = "inline";
 	}
 	else
@@ -404,7 +404,7 @@ UIBuilder.showEquipmentCosts = function(prestige, buyCost, upCost)
 		if (buyCost > prestige)
 		{
 			var diff = buyCost - prestige;
-			$('eqNewText').innerHTML = "<span style='color:#BB7575'>Need " + diff + " more prestige to buy.</span>";
+			$('eqNewText').innerHTML = "<span style='color:#BB7575'>还差 " + diff + " 声望才能购买。</span>";
 		}
 		else
 		{
@@ -415,7 +415,7 @@ UIBuilder.showEquipmentCosts = function(prestige, buyCost, upCost)
 
 	if (upCost > 0 && upCost <= prestige)
 	{
-		$('eqUpgradeText').innerHTML = " Upgrade unit cost: " + upCost + UIBuilder.currencyIcon;
+		$('eqUpgradeText').innerHTML = " 升级单位费用：" + upCost + UIBuilder.currencyIcon;
 		$('eqUpgradeBut').style.display = "inline";
 	}
 	else
@@ -423,7 +423,7 @@ UIBuilder.showEquipmentCosts = function(prestige, buyCost, upCost)
 		if (upCost > prestige)
 		{
 			var diff = upCost - prestige;
-			$('eqUpgradeText').innerHTML = "<span style='color:#BB7575'>Need " + diff + " more prestige to upgrade.</span>";
+			$('eqUpgradeText').innerHTML = "<span style='color:#BB7575'>还差 " + diff + " 声望才能升级。</span>";
 		}
 		else
 		{
@@ -432,7 +432,7 @@ UIBuilder.showEquipmentCosts = function(prestige, buyCost, upCost)
 		$('eqUpgradeBut').style.display = "none";
 	}
 
-	$('currentPrestige').innerHTML = "Available prestige: " + prestige + UIBuilder.currencyIcon;
+	$('currentPrestige').innerHTML = "可用声望：" + prestige + UIBuilder.currencyIcon;
 }
 
 UIBuilder.showAttackInfo = function(atkunit, defunit)
@@ -449,7 +449,7 @@ UIBuilder.showAttackInfo = function(atkunit, defunit)
 
 	tmpdiv = addTag($('statusmsg'), 'div');
 	tmpdiv.style.cssFloat = "left";
-	tmpdiv.innerHTML = "<b>" + ad.name + "</b> " + unitClassNames[ad.uclass] + " attacking &nbsp;";
+	tmpdiv.innerHTML = "<b>" + ad.name + "</b> " + unitClassNames[ad.uclass] + " 攻击 ";
 
 	tmpdiv = addTag($('statusmsg'), 'div');
 	tmpdiv.className = "playerCountry";

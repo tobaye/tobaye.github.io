@@ -100,7 +100,7 @@ function Campaign(campIndex)
 			var lScenName;
 
 			if (lID == 255)
-				lScenName = "Defeat (End Campaign)";
+				lScenName = "战败（战役结束）";
 			else
 				lScenName = Scenario.getScenarioDataByFileName(campaignData[lID].scenario)[1];
 
@@ -108,7 +108,7 @@ function Campaign(campIndex)
 			var tScenName;
 
 			if (tID == 254)
-				tScenName = "Victory (End Campaign)";
+				tScenName = "胜利（战役结束）";
 			else
 				tScenName = Scenario.getScenarioDataByFileName(campaignData[tID].scenario)[1];
 
@@ -116,7 +116,7 @@ function Campaign(campIndex)
 			var vScenName;
 
 			if (vID == 254)
-				vScenName = "Victory (End Campaign)";
+				vScenName = "胜利（战役结束）";
 			else
 				vScenName = Scenario.getScenarioDataByFileName(campaignData[vID].scenario)[1];
 
@@ -124,19 +124,19 @@ function Campaign(campIndex)
 			var bScenName;
 
 			if (bID == 254)
-				bScenName = "Victory (End Campaign)";
+				bScenName = "胜利（战役结束）";
 			else
 				bScenName = Scenario.getScenarioDataByFileName(campaignData[bID].scenario)[1];
 
 			if (tScenName == vScenName && vScenName == bScenName)
 			{
-				flowText += "- <b>" + currentScenName + "</b>" + l + t + "Lose: " + lScenName + l + t +
-					"Victory: " + tScenName + l + l;
+				flowText += "- <b>" + currentScenName + "</b>" + l + t + "战败：" + lScenName + l + t +
+					"胜利：" + tScenName + l + l;
 			}
 			else
 			{
-				flowText += "- <b>" +  currentScenName +  "</b>" + l + t + "Lose: " + lScenName + l + t +
-					"Tactical: " + tScenName + l + t +"Victory: " + vScenName + l + t + "Brilliant: " + bScenName + l + l;
+				flowText += "- <b>" +  currentScenName +  "</b>" + l + t + "战败：" + lScenName + l + t +
+					"战术胜利：" + tScenName + l + t +"胜利：" + vScenName + l + t + "辉煌胜利：" + bScenName + l + l;
 			}
 		}
 		return flowText;

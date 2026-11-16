@@ -188,7 +188,7 @@ function Game()
 		scenData = this.campaign.loadNextScenario(outcomeType);
 		if (scenData == null)
 		{
-			UIBuilder.message("Campaign Finished", outcomeText);
+			UIBuilder.message("战役结束", outcomeText);
 			this.gameEnded = true;
 		}
 		else

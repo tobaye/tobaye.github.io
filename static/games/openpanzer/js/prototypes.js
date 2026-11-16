@@ -10,7 +10,7 @@
  */
 
 var unitType = { none:-1, soft:0, hard:1, air:2, sea:3 };
-var unitTypeNames = ["Soft", "Hard", "Air", "Sea"];
+var unitTypeNames = ["软目标", "硬目标", "空中", "海上"];
 
 var unitClass = 
 {
@@ -22,10 +22,10 @@ var unitClass =
 
 var unitClassNames =
 [
-	"No Class", "Infantry", "Tank", "Recon", "Anti Tank", "Flak", "Fortification",
-	"Ground Transport", "Artillery", "Air Defence", "Fighter Aircraft", "Tactical Bomber",
-	"Level Bomber", "Air Transport", "Submarine" , "Destroyer", "Battleship",
-	"Aircraft Carrier", "Naval Transport", "Battle Cruiser", "Cruiser", "Light Cruiser"
+	"无类别", "步兵", "坦克", "侦察", "反坦克", "高射炮", "工事",
+	"地面运输", "炮兵", "防空", "战斗机", "战术轰炸机",
+	"水平轰炸机", "空运", "潜艇" , "驱逐舰", "战列舰",
+	"航空母舰", "海运", "战列巡洋舰", "巡洋舰", "轻巡洋舰"
 ];
 
 //How fast a unit class entrench
@@ -55,9 +55,9 @@ var terrainType =
 
 var terrainNames = 
 [
-	"Clear", "City", "Airfield", "Forest", "Bocage", "Hill", "Mountain", "Sand",
-	"Swamp", "Ocean", "River", "Fortification", "Port", "Stream", "Escarpment",
-	"Impassable river", "Rough"
+	"平原", "城市", "机场", "森林", "树篱", "丘陵", "山地", "沙地",
+	"沼泽", "海洋", "河流", "工事", "港口", "溪流", "陡坡",
+	"不可通行的河流", "崎岖地"
 ];
 
 //Clear, City, Airfield, Forest, Bocage, Hill, Mountain, Sand, Swamp, Ocean, River, Fortification, Port, Stream, Escarpment, impassableRiver, Rough, Roads
@@ -65,48 +65,48 @@ var terrainEntrenchment = [ 0, 3, 0, 2, 2, 1, 2, 0, 0, 0, 0, 4, 1, 0, 0, 0, 2 ];
 var terrainInitiative = [ 99, 1, 99, 3, 3, 5, 1, 99,2, 99, 99, 3, 5, 99, 99, 99, 3, 1];
 
 var groundCondition = { dry:0, frozen: 1, mud: 2 };
-var groundConditionNames = [ "Dry", "Frozen", "Mud" ];
+var groundConditionNames = [ "干燥", "冻结", "泥泞" ];
 var groundFontEncoding = ["6", "8", "7"]; //openpanzer icon font mapping
 var weatherCondition = { fair:0, overcast: 1, rain: 2, snow: 3 };
-var weatherConditionNames = ["Fair", "Overcast", "Raining", "Snowing"];
+var weatherConditionNames = ["晴朗", "阴天", "降雨", "降雪"];
 var weatherFontEncoding = ["4", "5", "1", "2"]; //openpanzer icon font mapping
 
 //TODO [0] should be All Countries
 var countryNames = 
 [
 	//"All Countries",
-	"Slovakia",
-	"Belgium",
-	"Bulgaria",
-	"Czechoslovakia",
-	"Denmark",
-	"Finland",
-	"France",
-	"Germany",
-	"Greece",
-	"USA",
-	"Hungary",
-	"Turkey",
-	"Italy",
-	"Netherlands",
-	"Norway",
-	"Poland",
-	"Portugal",
-	"Romania",
-	"Croatia",
-	"Russia",
-	"Sweden",
-	"Allied Yugoslavia",
-	"United Kingdom",
-	"Yugoslavia",
-	"Nationalist Spain",
-	"Republican Spain",
+	"斯洛伐克",
+	"比利时",
+	"保加利亚",
+	"捷克斯洛伐克",
+	"丹麦",
+	"芬兰",
+	"法国",
+	"德国",
+	"希腊",
+	"美国",
+	"匈牙利",
+	"土耳其",
+	"意大利",
+	"荷兰",
+	"挪威",
+	"波兰",
+	"葡萄牙",
+	"罗马尼亚",
+	"克罗地亚",
+	"苏联",
+	"瑞典",
+	"盟军南斯拉夫",
+	"英国",
+	"南斯拉夫",
+	"西班牙国民军",
+	"西班牙共和军",
 ];
 
 var sideNames = 
 [
-	"Axis",
-	"Allies"
+	"轴心国",
+	"盟军"
 ];
 
 var movMethod = 
@@ -118,16 +118,16 @@ var movMethod =
 
 var movMethodNames =
 [
-	"Tracked", "Half Tracked", "Wheeled", "Leg", "Towed", "Air", "Deep Naval", 
-	"Costal", "All Terrain", "Amphibious", "Naval", "Mountain Leg"
+	"履带", "半履带", "轮式", "徒步", "牵引", "空中", "深海", 
+	"近海", "全地形", "两栖", "海上", "山地徒步"
 ];
 
 var outcomeNames =
 {
-	"lose": "Defeat",
-	"victory": "Victory",
-	"tactical": "Tactical Victory",
-	"briliant": "Brilliant Victory"
+	"lose": "战败",
+	"victory": "胜利",
+	"tactical": "战术胜利",
+	"briliant": "辉煌胜利"
 };
 
 //Tables for movement cost for different ground conditions 254 Stop move (but select the tile), 255 Don't enter
@@ -290,8 +290,8 @@ var endGameType =
 
 var endGameLossText =
 {
-	moveCapture: "Enemy has captured all your objectives !<br>",
-	noTurnsLeft: "You don't have any turns left !<br>",
+	moveCapture: "敌军已占领你的全部目标！<br>",
+	noTurnsLeft: "你的回合已经用完！<br>",
 }
 
 var leaderType =

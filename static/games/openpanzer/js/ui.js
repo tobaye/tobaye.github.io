@@ -239,7 +239,7 @@ function uiMoveAnimationFinished(moveAnimationCBData)
 	{
 		var cell = mr.surpriseCell;
 		var pos = R.cellToScreen(cell.row, cell.col, true); //return absolute(window) values
-		bounceText(pos.x, pos.y, "Surprised!");
+		bounceText(pos.x, pos.y, "遭遇突袭！");
 		handleUnitAttack(moveAnimationCBData.unit, cell.row, cell.col); //TODO select which unit has surprised (air / ground)
 	}
 	if (mr.isVictorySide >= 0)
@@ -252,8 +252,8 @@ function uiMoveAnimationFinished(moveAnimationCBData)
 		else
 		{
 			uiMessage(outcomeNames[victoryType],
-				map.currentPlayer.getCountryName() + " on " + sideNames[mr.isVictorySide]
-				+ " side wins by capturing all victory hexes");
+				map.currentPlayer.getCountryName() + "（" + sideNames[mr.isVictorySide]
+				+ "方）通过占领全部胜利目标格获胜");
 
 			game.gameEnded = true;
 		}
@@ -573,7 +573,7 @@ function updateUnitContextWindow(u)
 		div = addTag('unit-context', 'div');
 		div.className = "unit-context-buttons";
 		div.id = "unit-context-mount";
-		div.title = "Mount/Umount this unit in/from a transport";
+		div.title = "将该单位装入/卸出运输工具";
 		div.onclick = function() {unitContextButton('mount', u);}
 	}
 	
@@ -583,7 +583,7 @@ function updateUnitContextWindow(u)
 		div = addTag('unit-context', 'div');
 		div.className = "unit-context-buttons";
 		div.id = "unit-context-embark";
-		div.title = "Embark/DisEmbark this unit in/from a air/naval transport";
+		div.title = "将该单位装入/卸出空运/海运运输工具";
 		div.onclick = function() {unitContextButton('embark', u);}
 	}
 
@@ -593,7 +593,7 @@ function updateUnitContextWindow(u)
 		div = addTag('unit-context', 'div');
 		div.className = "unit-context-buttons";
 		div.id = "unit-context-resupply";
-		div.title = "Resupply Ammo and Fuel for this unit";
+		div.title = "为该单位补给弹药和燃料";
 		div.onclick = function() {unitContextButton('resupply', u);}
 	}
 
@@ -603,7 +603,7 @@ function updateUnitContextWindow(u)
 		div = addTag('unit-context', 'div');
 		div.className = "unit-context-buttons";
 		div.id = "unit-context-reinforce";
-		div.title = "Reinforce unit strength";
+		div.title = "补充该单位兵力";
 		div.onclick = function() {unitContextButton('reinforce', u);}
 	}
 	
@@ -613,7 +613,7 @@ function updateUnitContextWindow(u)
 		div = addTag('unit-context', 'div');
 		div.className = "unit-context-buttons";
 		div.id = "unit-context-undo";
-		div.title = "Undo last move";
+		div.title = "撤销上一步移动";
 		div.onclick = function() { unitContextButton('undo', u); }
 	}
 	
@@ -664,7 +664,7 @@ function updateUnitInfoWindow(u)
 	$('uName').innerHTML = uinfo.name + " " + unitClassNames[uinfo.uclass];
 
 	if (!isEqUnit && u.isCore)
-		$('uName').innerHTML += " (Core Unit)";
+		$('uName').innerHTML += "（核心单位）";
 
 	//$('uClass').innerHTML = uinfo.uclass;
 	$('uTarget').innerHTML = unitTypeNames[uinfo.target];
@@ -897,7 +897,7 @@ function updateEquipmentWindow(eqclass)
 		userUnitSelected = $('eqUserSel').deployunit;
 		unitList = map.currentPlayer.getCoreUnitList();
 		uiSettings.deployMode = true;
-		$('statusmsg').innerHTML = "Deploy (on map grey hexes) or upgrade your core units"
+		$('statusmsg').innerHTML = "在地图灰色格部署或升级你的核心单位"
 	}
 	else
 	{
@@ -905,7 +905,7 @@ function updateEquipmentWindow(eqclass)
 		userUnitSelected = $('eqUserSel').userunit;
 		unitList = map.getUnits();
 		uiSettings.deployMode = false;
-		$('statusmsg').innerHTML = "Units currently deployed on map."
+		$('statusmsg').innerHTML = "当前已部署在地图上的单位。"
 	}
 
 	if (oldDeployMode !== uiSettings.deployMode) //Check if we should refresh canvas for new mode
@@ -997,7 +997,7 @@ function updateEquipmentWindow(eqclass)
 	if (typeof UIBuilder.eqClassButtons[eqclass] === "undefined") return;
 
 	//Info text above
-	$('eqInfoText').innerHTML = scenarioYear + " " + unitClassNames[eqclass] + " upgrades for " + countryNames[country - 1];
+	$('eqInfoText').innerHTML = scenarioYear + " " + unitClassNames[eqclass] + " 升级装备一览 · " + countryNames[country - 1];
 	//Units in equipment
 	var eqUnitSelected = $('eqUserSel').equnit;
 	var sortOrder = $('eqUserSel').sortorder;
@@ -1094,23 +1094,23 @@ function updateStatusBarLocation(row, col)
 		return false;
 	var text = "";
 	if (hex.road > roadType.none)
-		text = "/Road";
+		text = "/道路";
 	text = terrainNames[hex.terrain] + text + " (" + row + "," + col + ")";
 
 	if (hex.name !== null)
 		text = hex.name + " " + text;
 
 	if (hex.terrain == terrainType.Airfield && map.currentPlayer.airTransports > 0)
-		text += " Air Transports: " + map.currentPlayer.airTransports;
+		text += " 空运运输工具：" + map.currentPlayer.airTransports;
 
 	if (hex.terrain == terrainType.Port && map.currentPlayer.navalTransports > 0)
-		text += " Naval Transports: " + map.currentPlayer.navalTransports;
+		text += " 海运运输工具：" + map.currentPlayer.navalTransports;
 
 	if ((unit = hex.getUnit(uiSettings.airMode)) !== null
 		&& (hex.isSpotted(map.currentPlayer.side) || unit.tempSpotted 
 			|| unit.player.side == map.currentPlayer.side)) 
 	{
-		text = " Unit: " + unit.unitData(true).name + " " + text; 
+		text = " 单位：" + unit.unitData(true).name + " " + text; 
 	}
 
 	$('locmsg').innerHTML = text;
@@ -1143,7 +1143,7 @@ function uiEndTurn()
 
 	if (game.gameEnded)
 	{
-		uiMessage("DEFEAT", "<br><br>You didn't capture the objectives in time");
+		uiMessage("战败", "<br><br>你未能在限定回合内占领全部目标");
 		return;
 	}
 	countries = map.getCountriesBySide(game.spotSide);
@@ -1169,33 +1169,33 @@ function uiEndTurnInfo()
 
 	var infoStr = "<b>" + game.scenario.date.toDateString() + "</b></br>";
 
-	infoStr += weatherConditionNames[game.scenario.atmosferic] + " weather ";
-	infoStr += " and " + groundConditionNames[game.scenario.ground] + " ground.";
+	infoStr += weatherConditionNames[game.scenario.atmosferic] + "天气，地面";
+	infoStr += "" + groundConditionNames[game.scenario.ground] + "。";
 
-	infoStr += "<br/><br/>There are <b>" + map.sidesVictoryHexes[p.side].length + "</b> objectives left to conquer <br/><br/>";
+	infoStr += "<br/><br/>还有 <b>" + map.sidesVictoryHexes[p.side].length + "</b> 个目标待占领 <br/><br/>";
 
 	if ((turnsLeft = map.victoryTurns[0] - (map.turn - 1)) > 0)
-		infoStr += "<b>" + turnsLeft + "</b> turns left for <b>" + outcomeNames["briliant"] + "</b><br/>";
+		infoStr += "<b>" + turnsLeft + "</b> 回合后达成 <b>" + outcomeNames["briliant"] + "</b><br/>";
 
 	if ((turnsLeft = map.victoryTurns[1] - (map.turn -1)) > 0)
-		infoStr += "<b>" + turnsLeft + "</b>  turns left for <b>" + outcomeNames["victory"] + "</b><br/>";
+		infoStr += "<b>" + turnsLeft + "</b> 回合后达成 <b>" + outcomeNames["victory"] + "</b><br/>";
 
 	if ((turnsLeft = map.victoryTurns[2] - (map.turn -1)) > 0)
-		infoStr += "<b>" + turnsLeft + "</b>  turns left for <b>" + outcomeNames["tactical"] + "</b><br/>";
+		infoStr += "<b>" + turnsLeft + "</b> 回合后达成 <b>" + outcomeNames["tactical"] + "</b><br/>";
 
 	uiTurnInfo();
-	uiMessage(p.getCountryName() + " player on " + map.currentPlayer.getSideName()
-			+ " side  Turn " + map.turn + "/" + map.maxTurns, infoStr);
+	uiMessage(p.getCountryName() + " 玩家（" + map.currentPlayer.getSideName()
+			+ "方） 回合 " + map.turn + "/" + map.maxTurns, infoStr);
 }
 
 //Show turn info status bar messaage
 function uiTurnInfo()
 {
 	clearTag($('statusmsg'));
-	$('statusmsg').innerHTML = map.currentPlayer.getCountryName() + " Turn: " + map.turn + "/" + map.maxTurns + " " + game.scenario.name;
+	$('statusmsg').innerHTML = map.currentPlayer.getCountryName() + " 回合：" + map.turn + "/" + map.maxTurns + " " + game.scenario.name;
 	$('weathermsg').innerHTML = groundFontEncoding[game.scenario.ground] + weatherFontEncoding[game.scenario.atmosferic];
-	$('weathermsg').title = groundConditionNames[game.scenario.ground] + " ground and "
-				+ weatherConditionNames[game.scenario.atmosferic] + " weather";
+	$('weathermsg').title = groundConditionNames[game.scenario.ground] + "地面，"
+				+ weatherConditionNames[game.scenario.atmosferic] + "天气";
 
 }
 
