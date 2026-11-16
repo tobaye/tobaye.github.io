@@ -1,5 +1,5 @@
 {{/*
-  【站点层覆盖】本文件为普客网站点对 Tobpage 主题 partials/header.html 的覆盖（与主题 v1.2.0 原件的唯一差异：在主导航「关于」之后增加「词光」一项（语言学习图标为站点层内嵌 SVG），直达词光应用 https://words.puke.eu.org；并在「词光」之后增加「游戏」一项（游戏手柄图标为站点层内嵌 SVG），链接站内游戏索引页 /games/）。
+  【站点层覆盖】本文件为普客网站点对 Tobpage 主题 partials/header.html 的覆盖（与主题 v1.2.0 原件的唯一差异：在主导航「关于」之后增加「词光」一项（语言学习图标为站点层内嵌 SVG），直达词光应用 https://words.puke.eu.org；并在「词光」之后增加「游戏」下拉项（游戏手柄图标为站点层内嵌 SVG，结构与分类父栏目同款，下拉直达三款自托管网页游戏））。
   主题升级时须以新主题原件重新套用此改动，勿直接覆盖丢失。
 */}}
 {{- $meta := partial "category-meta.html" . -}}
@@ -59,8 +59,19 @@
         <li class="nav-item">
           <a class="nav-link" href="https://words.puke.eu.org"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#c9a24b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg><span>词光</span></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link{{ if eq .RelPermalink ("games/" | relURL) }} active{{ end }}" href="{{ "games/" | relURL }}"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#c9a24b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/></svg><span>游戏</span></a>
+        <li class="nav-item has-drop">
+          <a class="nav-link nav-parent" href="#" aria-haspopup="true"><svg class="ic" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#c9a24b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/></svg><span>游戏</span>{{ partial "icon.html" (dict "name" "chevron-down" "size" 13 "class" "nav-caret") }}</a>
+          <ul class="nav-drop">
+            <li>
+              <a href="{{ "games/micropolis/" | relURL }}">{{ partial "icon.html" (dict "name" "layout-grid" "size" 15 "color" "#22c55e") }}<span>Micropolis · 模拟城市</span><span class="nav-dot" style="background: #22c55e"></span></a>
+            </li>
+            <li>
+              <a href="{{ "games/openpanzer/" | relURL }}">{{ partial "icon.html" (dict "name" "star" "size" 15 "color" "#65a30d") }}<span>OpenPanzer · 装甲将军</span><span class="nav-dot" style="background: #65a30d"></span></a>
+            </li>
+            <li>
+              <a href="{{ "games/server-survival/" | relURL }}">{{ partial "icon.html" (dict "name" "server" "size" 15 "color" "#0ea5e9") }}<span>Server Survival · 服务器生存</span><span class="nav-dot" style="background: #0ea5e9"></span></a>
+            </li>
+          </ul>
         </li>
       </ul>
       <div class="nav-actions">

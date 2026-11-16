@@ -146,5 +146,39 @@
 	<!-- reference custom fonts so they get loaded before the canvas rendering -->
 	<span style="font-family: unitInfo; visibility: hidden">Preloading unitInfo font</span>
 	<span style="font-family: coreUnitFont; visibility: hidden">Preloading coreUnitFont</span>
-  </body>
+  
+<style>
+.puke-intro-mask{position:fixed;inset:0;z-index:999999;background:rgba(10,8,4,.62);display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box}
+.puke-intro-card{background:#171204;color:#f3ead3;max-width:430px;width:100%;border:1px solid rgba(201,162,75,.55);border-radius:16px;padding:26px 24px 22px;box-shadow:0 18px 50px rgba(0,0,0,.5);font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;text-align:center;box-sizing:border-box}
+.puke-intro-title{margin:0 0 12px;font-size:21px;line-height:1.35;color:#e8c97a}
+.puke-intro-text{margin:0 0 14px;font-size:15px;line-height:1.75;text-align:left}
+.puke-intro-src{margin:0 0 20px;font-size:12.5px;line-height:1.6;color:rgba(243,234,211,.62)}
+.puke-intro-btn{display:inline-block;background:#c9a24b;color:#171204;border:0;border-radius:999px;padding:11px 34px;font-size:15.5px;font-weight:700;cursor:pointer;font-family:inherit}
+.puke-intro-btn:hover{background:#e8c97a}
+</style>
+<div class="puke-intro-mask" id="puke-intro-openpanzer" style="display:none">
+  <div class="puke-intro-card">
+    <h2 class="puke-intro-title">OpenPanzer · 装甲将军</h2>
+    <p class="puke-intro-text">《装甲将军 II》的开源网页复刻：回合制二战战棋，指挥装甲、步兵与炮兵同 AI 对战，有战役与剧本模式，进度保存在浏览器本地。</p>
+    <p class="puke-intro-src">来源：nicupavel/openpanzer（GPL-2.0）· 本站自托管部署</p>
+    <button class="puke-intro-btn" type="button" id="puke-intro-openpanzer-btn">开始游戏</button>
+  </div>
+</div>
+<script>
+(function () {
+  var KEY = 'puke-intro-openpanzer';
+  var mask = document.getElementById(KEY);
+  var btn = document.getElementById(KEY + '-btn');
+  if (!mask || !btn) { return; }
+  var seen = false;
+  try { seen = !!localStorage.getItem(KEY); } catch (e) { seen = false; }
+  if (seen) { return; }
+  mask.style.display = 'flex';
+  btn.addEventListener('click', function () {
+    try { localStorage.setItem(KEY, '1'); } catch (e) {}
+    mask.style.display = 'none';
+  });
+})();
+</script>
+</body>
 </html>

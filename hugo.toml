@@ -106,11 +106,6 @@ summaryLength = 80
     url = 'https://words.puke.eu.org'
     weight = 25
   [[menu.main]]
-    identifier = 'games'
-    name = '游戏'
-    url = '/games/'
-    weight = 27
-  [[menu.main]]
     identifier = 'archives'
     name = '归档'
     url = '/archives/'
