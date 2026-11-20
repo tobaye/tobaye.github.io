@@ -10,6 +10,9 @@ cover:
   alt: "蜀道栈道悬绝壁"
 ---
 
+> 🎧 名家朗诵：乔榛（来源：YouTube）
+<audio controls preload="metadata" src="https://puke-media.tobaye-031.workers.dev/poems/shudaonan.mp3" style="width:100%"></audio>
+
 ## 原文
 
 噫吁嚱，危乎高哉！蜀道之难，难于上青天！蚕丛及鱼凫，开国何茫然！尔来四万八千岁，不与秦塞通人烟。西当太白有鸟道，可以横绝峨眉巅。地崩山摧壮士死，然后天梯石栈相钩连。上有六龙回日之高标，下有冲波逆折之回川。黄鹤之飞尚不得过，猿猱欲度愁攀援。青泥何盘盘，百步九折萦岩峦。扪参历井仰胁息，以手抚膺坐长叹。
