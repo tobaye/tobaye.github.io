@@ -11,7 +11,7 @@ cover:
 ---
 
 > 🎧 名家朗诵：濮存昕（来源：哔哩哔哩）
-<audio controls preload="metadata" src="https://puke-media.tobaye-031.workers.dev/poems/mengyoutianlao.mp3" style="width:100%"></audio>
+<audio controls preload="metadata" src="https://media.puke.eu.org/poems/mengyoutianlao.mp3" style="width:100%"></audio>
 
 《梦游天姥吟留别》是李白最有名的一首长诗，也是一首记梦诗、一首游仙诗。李白（701—762），字太白，号青莲居士，唐玄宗天宝元年（742）经道士吴筠推荐奉诏入京，供奉翰林；天宝三载（744）因受权贵排挤，被赐金放还，离开长安。这首诗大约作于天宝四载（745），他将由东鲁（今山东）南游吴越、留别东鲁诸友之时，故又题作《梦游天姥山别东鲁诸公》，作年另有一说为天宝五载（746），本文取通行的天宝四载说。
 

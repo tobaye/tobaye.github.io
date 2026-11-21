@@ -11,7 +11,7 @@ cover:
 ---
 
 > 🎧 名家朗诵：方明（来源：YouTube）
-<audio controls preload="metadata" src="https://puke-media.tobaye-031.workers.dev/poems/jiangjinjiu.mp3" style="width:100%"></audio>
+<audio controls preload="metadata" src="https://media.puke.eu.org/poems/jiangjinjiu.mp3" style="width:100%"></audio>
 
 《将进酒》是李白沿用乐府旧题写的一首劝酒歌，大约作于他被「赐金放还」、离开长安之后，与朋友岑勋、元丹丘相聚畅饮时所作。全诗情绪像黄河一样起伏：由悲入欢，由欢入狂，最后在一声「万古愁」里收束。近一千三百年过去，它依然是中文世界里最有气势的一首诗。
 

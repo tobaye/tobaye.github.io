@@ -11,7 +11,7 @@ cover:
 ---
 
 > 🎧 名家朗诵：濮存昕（来源：哔哩哔哩）
-<audio controls preload="metadata" src="https://puke-media.tobaye-031.workers.dev/poems/zaofabaidicheng.mp3" style="width:100%"></audio>
+<audio controls preload="metadata" src="https://media.puke.eu.org/poems/zaofabaidicheng.mp3" style="width:100%"></audio>
 
 《早发白帝城》是李白流传最广的七言绝句，二十八个字写尽了长江三峡的一段顺流疾行。唐肃宗乾元二年（759）春天，李白因永王李璘案被流放夜郎，取道四川赶赴贬地；行至白帝城时，忽然收到赦免的消息，惊喜交加，随即乘舟东下江陵。此诗即是回舟抵江陵时所作，所以诗题一作《下江陵》。前两句写船之快，后两句以猿声与万重山烘托这快——快的不只是船，更是赦后归心似箭的人。
 

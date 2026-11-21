@@ -11,7 +11,7 @@ cover:
 ---
 
 > 🎧 名家朗诵：徐涛（来源：哔哩哔哩）
-<audio controls preload="metadata" src="https://puke-media.tobaye-031.workers.dev/poems/shanjuqiuming.mp3" style="width:100%"></audio>
+<audio controls preload="metadata" src="https://media.puke.eu.org/poems/shanjuqiuming.mp3" style="width:100%"></audio>
 
 《山居秋暝》是王维山水诗里最有名的一首，也是「诗中有画」这四个字最直观的注脚。王维（701—761），字摩诘，河东蒲州人，官至尚书右丞，世称王右丞，后人又称他「诗佛」。苏轼在《书摩诘蓝田烟雨图》里写道：「味摩诘之诗，诗中有画；观摩诘之画，画中有诗。」此诗正是这句话的出处之一。
 

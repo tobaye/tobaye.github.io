@@ -11,7 +11,7 @@ cover:
 ---
 
 > 🎧 名家朗诵：姚锡娟（来源：哔哩哔哩）
-<audio controls preload="metadata" src="https://puke-media.tobaye-031.workers.dev/poems/shengshengman.mp3" style="width:100%"></audio>
+<audio controls preload="metadata" src="https://media.puke.eu.org/poems/shengshengman.mp3" style="width:100%"></audio>
 
 《声声慢》是李清照后期词的代表作，也是宋词里最有名的一首「愁词」。李清照（1084—约1155），号易安居士，济南人。靖康之变后，她随夫赵明诚南渡；建炎三年（1129年），赵明诚病逝于建康途中。此词一题作《秋情》，一般认为作于赵明诚去世之后（具体年份未确证），写的是国破、家亡、夫死之后，一个人面对的秋天。
 

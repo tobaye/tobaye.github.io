@@ -11,7 +11,7 @@ cover:
 ---
 
 > 🎧 名家朗诵：乔榛（来源：YouTube）
-<audio controls preload="metadata" src="https://puke-media.tobaye-031.workers.dev/poems/shudaonan.mp3" style="width:100%"></audio>
+<audio controls preload="metadata" src="https://media.puke.eu.org/poems/shudaonan.mp3" style="width:100%"></audio>
 
 ## 原文
 
